@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index, follow">
+  <title>Design Conferences Database • Resources for Designers by Rishabh Pandey</title>
+  <link rel="icon" type="image/x-icon" href="assets/Rishabh_Pandey_Fevicon.png">
+
+  <meta name="description"
+    content="Comprehensive and updated list of design research conferences worldwide. A valuable resource for designers, researchers, and academics curated by Rishabh Pandey.">
+  <meta name="keywords"
+    content="design conferences, design research conferences, design conferences 2025, design conferences 2026, design conferences 2027, upcoming design conferences, design symposium, academic design events, design research resources, design conference list, international design conferences">
+  <meta name="author" content="Rishabh Pandey">
+
+  <meta property="og:title" content="Design Conferences Database | Resources for Designers by Rishabh Pandey" />
+  <meta property="og:description"
+    content="Comprehensive and updated list of design research conferences worldwide. A valuable resource for designers, researchers, and academics curated by Rishabh Pandey." />
+  <meta property="og:url" content="https://resources.rishabhpandey.com/conflist.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Rishabh Pandey Design Resources" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Design Conferences Database | Resources for Designers by Rishabh Pandey" />
+  <meta name="twitter:description"
+    content="Explore the most comprehensive list of upcoming design research conferences globally. Curated by design researcher Rishabh Pandey." />
+
+  <link rel="canonical" href="https://resources.rishabhpandey.com/conflist.html" />
+
+  <!-- Bootstrap css link -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <!-- Bootstrap js link -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+  <!-- Custom css link -->
+  <link rel="stylesheet" href="css/styles-publish-v2.css" id="theme-link">
+
+  <!-- Custom fonts link -->
+  <link rel="preconnect" href="https://api.fontshare.com/">
+  <link href="https://api.fontshare.com/v2/css?f[]=public-sans@1,2&f[]=spline-sans@1&f[]=cabinet-grotesk@1&display=swap"
+    rel="stylesheet">
+
+  <!-- Custom icon font link -->
+  <link rel="preconnect" href="https://fonts.gstatic.com/">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3VM1XM2C88"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    // Configure for cross-domain tracking
+    gtag('config', 'G-3VM1XM2C88', {
+      cookie_domain: 'auto'
+    });
+  </script>
+
+  <!-- Firebase SDK start -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+    import { firebaseConfig } from "./js/firebase-config-conferences.js"; // Use conferences config
+
+    // Initialize Firebase & Database
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const likeRef = ref(db, "likes");
+    const visitorRef = ref(db, "visitors");
+
+    // 🔴 Unique keys for this page
+    const KEYPREFIX = "conf_";           // ← different from Journals
+    const LIKE_KEY = KEYPREFIX + "liked";
+    const VISIT_KEY = KEYPREFIX + "vis_ts";
+
+    // 🔄 Fetch & Sync Live Like Count
+    onValue(likeRef, (snap) => {
+      document.getElementById("likeCount").innerText = snap.val() ?? 0;
+    });
+    onValue(visitorRef, (snap) => {
+      document.getElementById("visitorCount").innerText = snap.val() ?? 0;
+    });
+
+    // 👍 Like once per browser
+    window.likePage = function () {
+      if (localStorage.getItem(LIKE_KEY) === "1") return;
+      runTransaction(likeRef, (l) => (l || 0) + 1).then(() => {
+        localStorage.setItem(LIKE_KEY, "1");
+        const btn = document.getElementById("likeButtonContainer");
+        btn.classList.add("liked-animation");
+        setTimeout(() => btn.classList.remove("liked-animation"), 1000);
+      });
+    };
+
+    // 👤 Count visitor once per 24h
+    const DAY = 24 * 60 * 60 * 1000;
+    function shouldCountVisitor() {
+      const last = Number(localStorage.getItem(VISIT_KEY) || 0);
+      return Date.now() - last > DAY;
+    }
+    function markVisitor() {
+      localStorage.setItem(VISIT_KEY, Date.now().toString());
+    }
+    function countVisitorIfNeeded() {
+      if (!shouldCountVisitor()) return;
+      runTransaction(visitorRef, (v) => (v || 0) + 1).then(markVisitor);
+    }
+    window.addEventListener("load", countVisitorIfNeeded);
+
+  </script>
+  <!-- Firebase SDK end -->
+
+
+  <!-- Schema.org JSON-LD for Conference Dataset -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": "Design Conferences Database",
+    "description": "A curated and updated list of global design research conferences. A valuable resource for designers, researchers, and academics.",
+    "url": "https://resources.rishabhpandey.com/conflist.html",
+    "creator": {
+      "@type": "Person",
+      "name": "Rishabh Pandey",
+      "url": "https://rishabhpandey.com"
+    },
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "keywords": [
+      "design conferences",
+      "design research",
+      "academic design events",
+      "international design conferences",
+      "interaction design",
+      "XR",
+      "HCI"
+    ]
+  }
+  </script>
+</head>
+
+
+
+<body onload="updateLikes()">
+
+  <!--- Back to top button ---------->
+  <button type="button" class="btn btn-danger btn-floating btn-lg" id="btn-back-to-top"
+    style="display: block; padding: 0px;">
+
+    <span class="material-symbols-outlined" style="font-size:32px; padding-top:4px; padding-right:0px;">
+      north
+    </span>
+  </button>
+  <!--- Back to top button end ---------->
+
+
+
+
+  <!--- absolute div start -------------------->
+  <div class="containerfuild">
+    <div class="container">
+
+      <!--- nav bar desktop start -------------------->
+      <div class="row" style="padding-top:0px; background-color: none;">
+
+        <!--- nav bar desktop start -------------------->
+        <div id="nav">
+          <!-- logo start ----->
+          <h2><a href="https://www.rishabhpandey.com">
+              <!--span style="text-transform:normal; color:#22D658;">Rishabh Pandey</span-->
+              <img src="https://rishabhpandey.com/wp-content/uploads/2024/06/Rishabh-Pandey-Logo-Trimmed-2024.svg"
+                alt="logo" style="width: 3.14rem; float: left;">
+            </a></h2>
+          <!-- logo end ----->
+
+          <i class="material-symbols-outlined">
+            menu
+          </i>
+
+          <div id="menu">
+            <h4><a href="https://rishabhpandey.com/work/">Work</a></h4>
+            <h4><a href="https://rishabhpandey.com/about/">About</a></h4>
+            <h4><a href="https://resources.rishabhpandey.com/" id="highlight">Resources</a></h4>
+            <h4><a href="https://rishabhpandey.com/contact/">Contact</a></h4>
+
+
+            <!-- Theme Toggle Switch -->
+            <div id="theme-toggle-container">
+              <!--span id="tooltip"-->
+              <button id="theme-label" onclick="toggleTheme()">
+
+                <i id="moon-icon" class="material-symbols-outlined">
+                  brightness_4
+                </i>
+
+                <i id="sun-icon" class="material-symbols-outlined" style="display: none;">
+                  brightness_5
+                </i>
+              </button>
+              <!--span class="tooltiptext tooltip-left">
+                Change Theme
+              </span-->
+            </div>
+          </div>
+
+          <div id="menuHam">
+            <h4><a href="https://rishabhpandey.com/work/">Work</a></h4>
+            <h4><a href="https://rishabhpandey.com/about/">About</a></h4>
+            <h4><a href="https://resources.rishabhpandey.com/" id="highlight">Resources</a></h4>
+            <h4><a href="https://rishabhpandey.com/contact/">Contact</a></h4>
+            <i class="ri-close-line"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--- nav bar desktop end -------------------->
+
+
+    <!--- spacer ---->
+    <div class="d-none d-sm-block spacer_b40"></div>
+    <div class="spacer_b20"></div>
+    <!--- spacer end ---->
+
+    <!--- main content start -------------------->
+    <div class="container" style="background-color: none;">
+
+      <div class="row">
+        <div class="col-xl-11 col-lg-11 col-md-11 col-sm-12" id="header">
+
+          <div class="col-xl-7 col-lg-9 col-md-12 col-sm-12">
+            <h1>
+              Design Conferences
+            </h1>
+
+            <button id="likeButtonContainer" class="glow-on-hover" onclick="likePage()">
+              <i class="ri-heart-3-fill"></i>
+              <span id="likeCount">0</span>
+            </button>
+
+            <div id="visitorCountContainer">
+              <i class="material-symbols-outlined">
+                emoji_people
+              </i>
+              <span id="visitorCount">0</span></p>
+            </div>
+
+
+            <div class="spacer_b10"></div>
+            <p>
+              Struggling to find design-related academic conferences? My friends and I compiled a list and turned it
+              into this
+              site to make it easy for others to find and track them!
+            </p>
+
+            <div class="spacer_b40"></div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <!-- filter script starts -->
+      <!--span class="h5">Sort data by: </span-->
+      <div class="row col-xl-12 col-lg-12 col-md-12 col-sm-12" id="filterContainer">
+        <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12" id="filterLabel">
+
+          <!-- filter script starts -->
+          <fieldset>
+            <legend>
+              <p class="label">
+                Filter by Domain:
+              </p>
+            </legend>
+
+            <span style="float: left!important; margin-left:0px; margin-right: 16px;">
+              <p class="caption">
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter"
+                    value="Multidisciplinary" onchange="filterTable()"> Multidisciplinary</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="HCI"
+                    onchange="filterTable()"> HCI</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="XR"
+                    onchange="filterTable()"> XR</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter"
+                    value="Communication" onchange="filterTable()"> Communication</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter"
+                    value="Sustainability" onchange="filterTable()"> Sustainability</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="Industrial"
+                    onchange="filterTable()"> Industrial</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="Ergonomics"
+                    onchange="filterTable()"> Ergonomics</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="Craft"
+                    onchange="filterTable()"> Craft</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="Animation"
+                    onchange="filterTable()"> Animation</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="Games"
+                    onchange="filterTable()"> Games</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="AI"
+                    onchange="filterTable()"> AI</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="Education"
+                    onchange="filterTable()"> Education</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter"
+                    value="Transportation" onchange="filterTable()"> Transportation</label>
+            </span>
+          </fieldset>
+          <!-- filter script end -->
+
+        </div>
+
+        <!-- search function script -->
+        <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12" id="filterSearch">
+          <!--div class="spacer_b20"></div-->
+          <i class="material-symbols-outlined">
+            search
+          </i>
+          <input type="text" id="searchInput" onkeyup="myFunction()" placeholder="Search title">
+          <!-- <div id="noRecords">No records found</div> -->
+          <!--label for="sort">Sort by: </label>
+            <select onchange="sortTable(this.value)">
+                <option value="0">Title</option>
+                <option value="2">Domains</option>
+                <option value="3">CORE Rank</option>
+                <option value="5">Journal Option</option>
+                <option value="6">DC Available</option>
+                <option value="8">Travel Grant</option>
+            </select-->
+          <!-- search function script end -->
+
+        </div>
+      </div>
+
+
+      <!--div style="overflow-x:auto;"-->
+      <div class="table-container"> <!--for fixed table height -->
+        <!--div class="spacer_b20"></div-->
+        <table id="conferenceTable" class="header table table-hover table-dark">
+          <thead>
+            <tr id="HeadRow">
+              <th>#</th> <!-- Row number column -->
+              <th onclick="sortTable(1)">Title / Acronym</th>
+              <th onclick="sortTable(2)">Domains</th>
+              <th onclick="sortTable(3)">Ranking</th>
+              <th onclick="sortTable(4)">Proceedings Publisher</th>
+              <th onclick="sortTable(5)">Journal Option</th>
+              <th onclick="sortTable(6)">Conference Dates</th>
+              <th onclick="sortTable(7)">Conference Location</th>
+              <th onclick="sortTable(8)">Paper Deadline</th>
+              <th onclick="sortTable(9)">DC Option</th>
+              <th onclick="sortTable(10)">Website</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+
+            <tr>
+              <td>AARHUS 2025 – Decennial Aarhus Conference</td> <!--* title -->
+              <td>HCI / Crisis</td> <!--* domain -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Aug 18 – 22, 2025</td> <!--* conf dates -->
+              <td>Denmark 🇩🇰</td> <!--* conf location -->
+              <td>Feb 20, 2025 AoE</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://aarhus2025.projects.cavi.au.dk/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Absolute Sustainability 2025</td> <!--* title -->
+              <td>Sustainability</td> <!--* domain -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>NA / Design Society</td>
+              <td>N</td> <!--* journal option -->
+              <td>Sep 30 – 02 Oct, 2025</td> <!--* conf dates -->
+              <td>Denmark 🇩🇰</td> <!--* conf location -->
+              <td>Apr 01, 2025</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://sustainability.dtu.dk/annual-conference" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Academic Mindtrek 2025</td> <!--* title -->
+              <td>HCI / XR</td> <!--* domian -->
+              <td>B</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Oct 07 – 10, 2025</td> <!--* conf dates -->
+              <td>Finland 🇫🇮</td> <!--* conf location -->
+              <td>May 02, 2025</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://www.mindtrek.org/academic-mindtrek-2025/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>ACED 2026 – Asian Conference on Ergonomics and Design</td> <!--* title -->
+              <td>Ergonomics / HCI / XR / Animation / Communication</td> <!--* domain -->
+              <td>Unranked</td> <!--* domain -->
+              <td>Springer</td> <!--* ranking -->
+              <td>N</td> <!--* journal option -->
+              <td>Aug 01 – 05, 2026</td> <!--* conf dates -->
+              <td>Singapore 🇸🇬</td> <!--* conf location -->
+              <td>TBA</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://aced.asia/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>ACM AutoUI 2025 – Transportation User Interfaces and Interactive Vehicular Applications</td>
+              <!--* title -->
+              <td>HCI / Transportation</td> <!--* domian -->
+              <td>Unranked</td>
+              <td>ACM</td> <!--* publisher -->
+              <td>N</td>
+              <td>Nov 10 – 11, 2025</td> <!--* conf dates -->
+              <td>Australia 🇦🇺</td> <!--* conf location -->
+              <td>Jan 30, 2025</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://www.auto-ui.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>ACM C&C 2026 – ACM Creativity and Cognition</td> <!--* title -->
+              <td>HCI / XR</td> <!--* domain -->
+              <td>A</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Jul 13 – 16, 2026</td> <!--* conf dates -->
+              <td>United Kingdom 🇬🇧</td> <!--* conf location -->
+              <td>Jan 29, 2026 AoE (Paper Abstract) <br><br> Apr 16, 2026 AoE (Poster)</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://cc.acm.org/2026/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>ACM SUI 2025 – ACM Symposium on Spatial User Interaction</td> <!--* title -->
+              <td>HCI / XR</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>Y</td> <!--* journal option -->
+              <td>Nov 10 – 11, 2025</td> <!--* conf dates -->
+              <td>Canada 🇨🇦</td> <!--* conf location -->
+              <td>Jun 20, 2025 AoE</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://sui.acm.org/2025/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>AlpCHI 2026</td> <!--* title -->
+              <td>HCI / Communication / Health / Nature / Sports</td> <!--* domian -->
+              <td>NA</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Mar 01 – 05, 2026</td> <!--* conf dates -->
+              <td>Switzerland 🇨🇭</td> <!--* conf location -->
+              <td>Oct 20, 2025 AoE</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://alpchi.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Augmented Humans 2026</td> <!--* title -->
+              <td>HCI / XR</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Mar 16 – 19, 2026</td> <!--* conf dates -->
+              <td>Japan 🇯🇵</td> <!--* conf location -->
+              <td>Nov 18, 2025 AoE (Paper) <br><br> Jan 26, 2026 AoE (Poster)</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://augmented-humans.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>CGI 2026 – Computer Graphics International</td><!--* title -->
+              <td>HCI / XR / Computer Graphics / Visualization</td> <!--* domian -->
+              <td>C</td> <!--* ranking -->
+              <td>Springer / Wiley</td> <!--* publisher -->
+              <td>Y</td> <!--* journal option -->
+              <td>Jul 06 – 10, 2026</td> <!--* conf dates -->
+              <td>United Kingdom 🇬🇧</td> <!--* conf location -->
+              <td>TBA</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://www.cgs-network.org/cgi26/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>CHI 2026 – Computer Human Interaction</td> <!--* title -->
+              <td>HCI / XR</td> <!--* domian -->
+              <td>A*</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>Y</td> <!--* journal option -->
+              <td>Apr 13 – 17, 2026</td> <!--* conf dates -->
+              <td>Spain 🇪🇸</td> <!--* conf location -->
+              <td>Sep 04, 2025 AoE (Paper)<br><br>Jan 22, 2026 AoE (Poster)</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://chi2026.acm.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>CHI PLAY 2025 – Computer-Human Interaction in Play</td> <!--* title -->
+              <td>HCI / Games</td> <!--* domian -->
+              <td>A*</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>Y</td> <!--* journal option -->
+              <td>Oct 13 – 17, 2025</td> <!--* conf dates -->
+              <td>United States 🇺🇸</td> <!--* conf location -->
+              <td>Feb 19, 2025</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://chiplay.acm.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>CHIRA 2025 – Computer-Human Interaction Research and Applications</td> <!--* title -->
+              <td>HCI</td> <!--* domian -->
+              <td>C</td> <!--* ranking -->
+              <td>Springer</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Oct 20 – 21, 2025</td> <!--* conf dates -->
+              <td>Spain 🇪🇸</td> <!--* conf location -->
+              <td>May 19, 2025</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://chira.scitevents.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>CHItaly 2025 – Biannual Conference of the Italian SIGCHI Chapter</td> <!--* title -->
+              <td>HCI / XR / Wearable / AI</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Oct 06 – 10, 2025</td> <!--* conf dates -->
+              <td>Italy 🇮🇹</td> <!--* conf location -->
+              <td>Apr 21, 2025</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://chitaly2025.di.unisa.it//" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>CIRP Design 2026</td> <!--* title -->
+              <td>Multidisciplinary / HCI / AI / Communication / Industrial Design / Co-design / Education /
+                Sustainability / Theory / Method</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>CIRP</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Mar 16 – 18, 2026</td> <!--* conf dates -->
+              <td>Japan 🇯🇵</td> <!--* conf location -->
+              <td>Jul 13, 2025</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://cirp-design2026.jspe.or.jp/index.html" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>CMS 2026 – Communication & Media Studies</td> <!--* title -->
+              <td>Communication / Media</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>Common Ground</td> <!--* publisher -->
+              <td>Y</td> <!--* journal option -->
+              <td>Oct 01 – 02, 2026</td> <!--* conf dates -->
+              <td>Singapore 🇸🇬 + Online 🌐</td> <!--* conf location -->
+              <td>Sep 01, 2026</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://oncommunicationmedia.com/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>COMPASS 2026</td> <!--* title -->
+              <td>HCI / XR</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>TBA</td> <!--* conf dates -->
+              <td>TBA</td> <!--* conf location -->
+              <td>TBA</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://compass.acm.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>CONFIA 2025 – Conference on Illustration & Animation</td> <!--* title -->
+              <td>Communication / Animation / Illustration</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>Springer</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Jul 14 – 16, 2025</td> <!--* conf dates -->
+              <td>Portugal 🇵🇹</td> <!--* conf location -->
+              <td>Jan 31, 2025</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="http://www.confia.ipca.pt/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>CSCW 2026 – Computer-supported Cooperative Work and Social Computing</td> <!--* title -->
+              <td>HCI / XR / Social / Health / Transportation / Games / Theory / Method</td> <!--* domian -->
+              <td>A</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>Y</td> <!--* journal option -->
+              <td>Oct 10 – 14, 2026</td> <!--* conf dates -->
+              <td>United States 🇺🇸</td> <!--* conf location -->
+              <td>May 13, 2025 EDT</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://cscw.acm.org/2026/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Cumulus Athens 2026</td> <!--* title -->
+              <td>Multidisciplinary / Communication / Aesthetics / Cultural Heritage / Sustainability / AI / Method</td>
+              <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>Cumulus Association</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>May 05 - 09, 2026</td> <!--* conf dates -->
+              <td>Greece 🇬🇷</td> <!--* conf location -->
+              <td>Oct 31, 2025 UTC (Abstract)</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://cumulusathens2026.uniwa.gr/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>DCC 2026 – Design Computing and Cognition</td> <!--* title -->
+              <td>Multidisciplinary / AI / Cognition / HCI / Creativity / Method / Theory</td> <!--* domian -->
+              <td>A</td> <!--* ranking -->
+              <td>Springer</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Jul 06 – 08, 2026</td> <!--* conf dates -->
+              <td>France 🇫🇷</td> <!--* conf location -->
+              <td>Dec 01, 2025 (Paper) <br><br> Feb 27, 2026 (Poster)</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://sites.google.com/view/dcc26/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>DESIGN 2026 – Design Conference</td> <!--* title -->
+              <td>Multidisciplinary</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>Design Research Society</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>May 18 – 21, 2026</td> <!--* conf dates -->
+              <td>Croatia 🇭🇷</td> <!--* conf location -->
+              <td>Nov 15, 2025</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://www.designconference.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>DHS 2026 – Design History Society Annual Conference</td> <!--* title -->
+              <td>Multidisciplinary / History / Communication / Craft</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>Design History Society + Oxford University Press</td> <!--* publisher -->
+              <td>Y</td> <!--* journal option -->
+              <td>Sep 03 – 05, 2026</td> <!--* conf dates -->
+              <td>Czech Republic 🇨🇿</td> <!--* conf location -->
+              <td>Feb 01, 2026</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://arthistory.phil.muni.cz/dhs2026/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Digicom 2025</td> <!--* title -->
+              <td>Communication / HCI</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>Springer</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Nov 06 – 08, 2025</td> <!--* conf dates -->
+              <td>Portugal 🇵🇹 + Online 🌐</td> <!--* conf location -->
+              <td>Apr 30, 2025</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://digicom.ipca.pt/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>DIS 2026 – Designing Interactive Systems</td> <!--* title -->
+              <td>HCI</td> <!--* domian -->
+              <td>A</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Jun 13 – 17, 2026</td> <!--* conf dates -->
+              <td>Singapore 🇸🇬</td> <!--* conf location -->
+              <td>Jan 09, 2026 (Abstract) <br><br> Feb 13, 2026 (DC)</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://dis.acm.org/2026/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>DPP 2026 – Design Principles & Practices</td> <!--* title -->
+              <td>Multidisciplinary / Communication</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>Common Ground</td> <!--* publisher -->
+              <td>Y</td> <!--* journal option -->
+              <td>Feb 25 – 27, 2026</td> <!--* conf dates -->
+              <td>Italy 🇮🇹 + Online 🌐</td> <!--* conf location -->
+              <td>Jan 25, 2026</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://designprinciplesandpractices.com/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>DRCI International Conference on Creativity, Design, Technology and Management</td> <!--* title -->
+              <td>Multidisciplinary / Communication / HCI / Industrial / Creativity / AI / Ergonomics / Visual Art /
+                Craft / Sustainability / Management</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>Design Research Council of India</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Nov 01 – 03, 2025</td> <!--* conf dates -->
+              <td>India 🇮🇳</td> <!--* conf location -->
+              <td>Aug 31, 2025</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://drci.in/drci-conference/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>DRS 2026 – Design Research Society Biennial Conference</td> <!--* title -->
+              <td>Multidisciplinary / Education / Co-design / HCI / Policy / Systems / Ethics</td> <!--* domian -->
+              <td>B</td> <!--* ranking -->
+              <td>Design Research Society</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Jun 08 – 12, 2026</td> <!--* conf dates -->
+              <td>Scotland 🏴󠁧󠁢󠁳󠁣󠁴󠁿</td> <!--* conf location -->
+              <td>Oct 31, 2025 (Paper) <br><br>Jan 16, 2026 (DC)</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://drs2026.thedrs.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>EPDE 2026 – Engineering & Product Design Education</td> <!--* title -->
+              <td>Product / Industrial / Education / HCI / AI</td> <!--* domian -->
+              <td>C</td> <!--* ranking -->
+              <td>Design Society</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>TBA (~Sep, 2026)</td> <!--* conf dates -->
+              <td>TBA</td> <!--* conf location -->
+              <td>TBA (~Mar, 2026)</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://epde.info/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>EvoMUSART 2026 – Conference on Artificial Intelligence in Music, Sound, Art and Design</td>
+              <!--* title -->
+              <td>Multidisciplinary / AI / Design</td> <!--* domian -->
+              <td>C</td> <!--* ranking -->
+              <td>Springer</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Apr 8 – 10, 2026</td> <!--* conf dates -->
+              <td>France 🇫🇷</td> <!--* conf location -->
+              <td>Nov 01, 2025 AoE</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://www.evostar.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>GamiFIN 2026 – Annual International Conference on Gamification</td> <!--* title -->
+              <td>Games / HCI / Communication / Media / Health / Toy / Theory / Method</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Mar 23 - 27, 2026</td> <!--* conf dates -->
+              <td>Finland 🇫🇮</td> <!--* conf location -->
+              <td>Oct 27, 2025</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://gamifinconference.com/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>GI 2026 – Graphics Interface</td> <!--* title -->
+              <td>HCI</td> <!--* domian -->
+              <td>B</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>TBA</td> <!--* conf dates -->
+              <td>TBA</td> <!--* conf location -->
+              <td>TBA</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://graphicsinterface.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>HCI International 2026</td> <!--* title -->
+              <td>HCI</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>Springer</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Jul 26 – 31, 2026</td> <!--* conf dates -->
+              <td>Canada 🇨🇦</td> <!--* conf location -->
+              <td>Oct 10, 2025 AoE (Paper) <br><br> Jan 16, 2026 AoE (Poster)</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://2026.hci.international/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Heritage(s) 2026</td> <!--* title -->
+              <td>Cultural Heritage / Communication / Media / History / Architecture</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>AMPS</td> <!--* publisher -->
+              <td>Y</td> <!--* journal option -->
+              <td>Jul 06 – 08, 2026</td> <!--* conf dates -->
+              <td>Türkiye 🇹🇷</td> <!--* conf location -->
+              <td>Dec 15, 2025 (Abstract)</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://amps-research.com/conference/istanbul-heritages/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>HWWE 2026 – Humanizing Work and Work Environment</td> <!--* title -->
+              <td>Multidisciplinary / Ergonomics / HCI / Communication</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>Springer</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>TBA</td> <!--* conf dates -->
+              <td>TBA</td> <!--* conf location -->
+              <td>TBA</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://www.ise.org.in/hwwe.shtml" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>ICC 2027 – International Comfort Congress</td> <!--* title -->
+              <td>Multidisciplinary / HCI / Transportation / Industial Design / Ergonomics / Interior Design / Fashion /
+                Textile / Theory / Method</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>ICC</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>TBA (~Jun, 2027)</td> <!--* conf dates -->
+              <td>TBA</td> <!--* conf location -->
+              <td>TBA (~Aug, 2026)</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://www.comfortcongress.com/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>ICDHS 2027 – International Committee for Design History and Design Studies</td> <!--* title -->
+              <td>Multidisciplinary / Communication / Culture / History</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>TBA</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>TBA (~Oct, 2027)</td> <!--* conf dates -->
+              <td>Denmark 🇩🇰</td> <!--* conf location -->
+              <td>TBA (~Nov, 2026)</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://www.ub.edu/icdhs/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>ICED 2027 – International Conference on Engineering Design</td> <!--* title -->
+              <td>Multidisciplinary / HCI / Education / Culture / Health / Sustainability / AI / Theory / Management /
+                Manufacturing</td> <!--* domian -->
+              <td>B</td> <!--* ranking -->
+              <td>Design Society</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Aug 16 – 20, 2027</td> <!--* conf dates -->
+              <td>Germany 🇩🇪</td> <!--* conf location -->
+              <td>TBA (~Nov, 2026)</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://iced.designsociety.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>ICoRD 2027 – Biannual International Conference on Research into Design</td> <!--* title -->
+              <td>Multidisciplinary / HCI / Communication / Education / Creativity / Culture / Craft / Health /
+                Sustainability
+                /
+                Theory / Management / Manufacturing</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>Springer</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>TBA (~Jan, 2027)</td> <!--* conf dates -->
+              <td>India 🇮🇳</td> <!--* conf location -->
+              <td>TBA</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://design.iith.ac.in/icord25/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>ICVR 2026 – International Conference on Virtual Reality</td> <!--* title -->
+              <td>HCI / XR</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>IEEE</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>TBA (~Jul, 2026)</td> <!--* conf dates -->
+              <td>TBA</td> <!--* conf location -->
+              <td>TBA (~Feb, 2026)</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://icvr.org/index.html" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>IDC 2026 – ACM Interaction Design and Children Conference</td> <!--* title -->
+              <td>HCI / XR / Children</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Jun 22 – 25, 2026</td> <!--* conf dates -->
+              <td>United Kingdom 🇬🇧</td> <!--* conf location -->
+              <td>TBA (~Jan, 2026)</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://idc.acm.org/2026/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>IDSA IDC 2025 – International Design Conference and Education Symposium</td><!--* title -->
+              <td>Multidisciplinary / Industrial Design / Product Design / Engineering Design / Design Innovation</td>
+              <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>NA / Industrial Design Society of America</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Sep 16 – 19, 2025</td> <!--* conf dates -->
+              <td>United States 🇺🇸</td> <!--* conf location -->
+              <td>TBA</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://www.internationaldesignconference.com/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>IDEC 2026 Annual Conference</td><!--* title -->
+              <td>Interior Design / Environmental Design / Design Education / Design Research</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>N</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Mar 16 – 19, 2026</td> <!--* conf dates -->
+              <td>United States 🇺🇸</td> <!--* conf location -->
+              <td>Sep 17, 2025 PST</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://idec.org/conference/idec-2026-annual-conference/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>IEEE INNOVARail 2026</td> <!--* title -->
+              <td>Transportation / Industrial Design / Product Design / HCI</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>IEEE</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>May 26 – 28, 2026</td> <!--* conf dates -->
+              <td>United States 🇺🇸</td> <!--* conf location -->
+              <td>Sep 19, 2025</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://2026.ieee-innovarail.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>IEEE VR 2026 – IEEE Conference on Virtual Reality and 3D User Interfaces</td> <!--* title -->
+              <td>HCI / XR</td> <!--* domian -->
+              <td>A*</td> <!--* ranking -->
+              <td>IEEE</td> <!--* publisher -->
+              <td>Y</td> <!--* journal option -->
+              <td>Mar 08 – 12, 2026</td> <!--* conf dates -->
+              <td>South Korea 🇰🇷</td> <!--* conf location -->
+              <td>Sep 05, 2025 AoE (Paper) <br><br> Dec 19, 2025 AoE (Poster)</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://ieeevr.org/2026/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>IMX 2026 – ACM International Conference on Interactive Media Experiences</td> <!--* title -->
+              <td>HCI / XR</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Jun 09 – 11, 2026</td> <!--* conf dates -->
+              <td>Ireland 🇮🇪</td> <!--* conf location -->
+              <td>TBA (~Jan, 2026)</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://imx.acm.org/2026/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>IndiaHCI 2025</td> <!--* title -->
+              <td>HCI / XR / Games / Health / New Media</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Nov 07 – 09, 2025</td> <!--* conf dates -->
+              <td>India 🇮🇳</td> <!--* conf location -->
+              <td>Jun 10, 2025 IST (Paper)<br><br>Jul 15, 2025 IST (Poster)</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://www.2025.indiahci.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>INTERACT 2025 – International Conference on Human-Computer Interaction</td> <!--* title -->
+              <td>HCI</td> <!--* domian -->
+              <td>B</td> <!--* ranking -->
+              <td>Springer</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Sep 08 – 12, 2025</td> <!--* conf dates -->
+              <td>Brazil 🇧🇷</td> <!--* conf location -->
+              <td>Feb 17, 2025 AoE (Paper)<br><br>May 26, 2025 AoE (Poster)</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://interact2025.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>IASDR 2025 – International Association of Societies of Design Research Conference</td>
+              <!--* title -->
+              <td>Multidisciplinary</td> <!--* domian -->
+              <td>B</td> <!--* ranking -->
+              <td>Design Research Society</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Dec 02 – 05, 2025</td> <!--* conf dates -->
+              <td>Taiwan 🇹🇼</td> <!--* conf location -->
+              <td>May 01, 2025 UTC+8 (Paper)<br><br>May 15, 2025 UTC+8 (Poster)</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://iasdr2025.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>ISMAR 2025 – IEEE International Symposium on Mixed and Augmented Reality</td> <!--* title -->
+              <td>HCI / XR</td> <!--* domian -->
+              <td>A*</td> <!--* ranking -->
+              <td>IEEE</td> <!--* publisher -->
+              <td>Y</td> <!--* journal option -->
+              <td>Oct 08 – 12, 2025</td> <!--* conf dates -->
+              <td>South Korea 🇰🇷</td> <!--* conf location -->
+              <td>Apr 04, 2025 AoE (Paper)<br><br>Jul 29, 2025 AoE (Poster)</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://ieeeismar.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>LearnXDesign 2025</td> <!--* title -->
+              <td>Design / Education</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>Design Research Society</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Sep 22 – 25, 2025</td> <!--* conf dates -->
+              <td>Portugal 🇵🇹</td> <!--* conf location -->
+              <td>Jan 13, 2025</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://www.lxd2025.com/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>MIG 2025 – ACM SIGGRAPH Motion, Interaction and Games</td> <!--* title -->
+              <td>HCI / XR / Games / Animation</td> <!--* domain -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Dec 03 - 05, 2025</td> <!--* conf dates -->
+              <td>Switzerland 🇨🇭</td> <!--* conf location -->
+              <td>Aug 01, 2025 AoE (Paper) <br><br>Sep 24, 2025 AoE (Poster)</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://mig.siggraph.org/2025/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>MobileHCI 2026</td> <!--* title -->
+              <td>HCI</td> <!--* domian -->
+              <td>B</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Aug 31 – Sep 03, 2026</td> <!--* conf dates -->
+              <td>United Kingdom 🇬🇧</td> <!--* conf location -->
+              <td>Jan 29, 2026 AoE</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://mobilehci.acm.org/2026/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>MUM 2025 – Mobile and Ubiquitous Multimedia</td> <!--* title -->
+              <td>HCI</td> <!--* domian -->
+              <td>B</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Dec 01 – 04, 2025</td> <!--* conf dates -->
+              <td>Italy 🇮🇹</td> <!--* conf location -->
+              <td>Aug 21, 2025 AoE (Paper) <br><br>Oct 09, 2025 AoE (Poster)</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://mum-conf.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>NERD 7th Heaven – New Experimental Research in Design</td> <!--* title -->
+              <td>Multidisciplinary</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>Birkhäuser</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Nov 06 – 07, 2025</td> <!--* conf dates -->
+              <td>Germany 🇩🇪</td> <!--* conf location -->
+              <td>April 30, 2025</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://www.bird-international-research-in-design.org/conferences" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+            <tr>
+              <td>NORDES 2027 – Nordic Design Research Society Conference</td> <!--* title -->
+              <td>Multidisciplinary</td> <!--* domian -->
+              <td>B</td> <!--* ranking -->
+              <td>Nordes Digital Archive</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>TBA (~Aug, 2027)</td> <!--* conf dates -->
+              <td>TBA</td> <!--* conf location -->
+              <td>TBA</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://www.nordes.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>NordDesign 2026 – Biennial NordDesign conference</td> <!--* title -->
+              <td>Multidisciplinary / HCI / Industrial / Sustainability / Education / AI / Design Management</td>
+              <!--* domian -->
+              <td>B</td> <!--* ranking -->
+              <td>Design Soceity</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Aug 12 – 14, 2026</td> <!--* conf dates -->
+              <td>Finland 🇫🇮</td> <!--* conf location -->
+              <td>Feb 13, 2026 AoE</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://events.tuni.fi/norddesign2026/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>NordiCHI 2026 – Biennial Nordic Conference on Human-Computer Interaction</td> <!--* title -->
+              <td>HCI</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Oct 03 – 07, 2026</td> <!--* conf dates -->
+              <td>Finland 🇫🇮</td> <!--* conf location -->
+              <td>TBA</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://sites.uwasa.fi/nordichi2026/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>On Sustainability 2026 – Conference on Environmental, Cultural, Economic & Social Sustainability
+              </td>
+              <!--* title -->
+              <td>Sustainability</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>Common Ground</td> <!--* publisher -->
+              <td>Y</td> <!--* journal option -->
+              <td>Apr 20 – 22, 2026</td> <!--* conf dates -->
+              <td>Greece 🇬🇷 + Online 🌐</td> <!--* conf location -->
+              <td>Jan 20, 2026</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://onsustainability.com/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>OzCHI 2025 – Australian Conference on Human-Computer Interaction</td><!--* title -->
+              <td>HCI / XR</td> <!--* domian -->
+              <td>B</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Nov 29 – Dec 03, 2025</td> <!--* conf dates -->
+              <td>Australia 🇦🇺</td> <!--* conf location -->
+              <td>Jun 12, 2025 AoE (Paper) <br><br> Aug 18, 2025 AoE (DC)</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://www.ozchi.org/2025/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Pedagogy 2025</td><!--* title -->
+              <td>Education / Design Research / Communication / HCI</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>Taylor and Francis</td> <!--* publisher -->
+              <td>Y</td> <!--* journal option -->
+              <td>Nov 19 – 21, 2025</td> <!--* conf dates -->
+              <td>Online 🌐</td> <!--* conf location -->
+              <td>Oct 05, 2025</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://amps-research.com/conference/pedagogy-2025/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>PDC 2026 – Participatory Design Conference</td><!--* title -->
+              <td>Multidisciplinary / Participatory Design / HCI / Co-Design / Design Research</td> <!--* domian -->
+              <td>B</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Jun 16 – 19, 2026</td> <!--* conf dates -->
+              <td>Italy 🇮🇹</td> <!--* conf location -->
+              <td>Jun 16, 2025 CET</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://www.pdc2026.polimi.it/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>PLATE Conference 2027</td><!--* title -->
+              <td>Multidisciplinary / Sustainability / Product Design / Design Management</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>PLATE Consortium</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Jun 21 – 24, 2027</td> <!--* conf dates -->
+              <td>Sweden 🇸🇪</td> <!--* conf location -->
+              <td>TBA</td> <!--* paper deadline -->
+              <td>TBA</td> <!--* doctoral consortium -->
+              <td><a href="https://www.plateconference.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>RSD14 – Relating Systems Thinking and Design Symposium</td><!--* title -->
+              <td>Multidisciplinary / Sustainability / Systemic Design</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>Systemic Design Association</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Oct 08 – 21, 2025</td> <!--* conf dates -->
+              <td>Canada 🇨🇦 + Online 🌐</td> <!--* conf location -->
+              <td>Aug 31, 2025</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://rsdsymposium.org/rsd14-arcs-of-impact/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>ServDes 2025 – Service Design and Innovation</td> <!--* title -->
+              <td>Service Design</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>Design Research Society</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Oct 06 – 08, 2025</td> <!--* conf dates -->
+              <td>India 🇮🇳</td> <!--* conf location -->
+              <td>Mar 01, 2025</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://servdes25.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>SIGGRAPH 2026 – ACM SIG Conference on Computer Graphics and Interactive Techniques</td>
+              <!--* title -->
+              <td>HCI / XR / Graphics</td> <!--* domian -->
+              <td>A*</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>Y</td> <!--* journal option -->
+              <td>Jul 19 – 23, 2026</td> <!--* conf dates -->
+              <td>United States 🇺🇸</td> <!--* conf location -->
+              <td>TBA</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://s2026.siggraph.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>SIGGRAPH Asia 2025 – ACM SIG Conference on Computer Graphics and Interactive Techniques in Asia</td>
+              <!--* title -->
+              <td>HCI / XR / Graphics</td> <!--* domian -->
+              <td>A*</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>Y</td> <!--* journal option -->
+              <td>Dec 15 – 18, 2025</td> <!--* conf dates -->
+              <td>China 🇨🇳</td> <!--* conf location -->
+              <td>May 16, 2025 AoE (Paper)<br><br>Aug 20, 2025 AoE (Poster)</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://asia.siggraph.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>SDNC 2025 – Social Design Network Conference</td><!--* title -->
+              <td>Multidisciplinary / Social Design / Participatory Design / Sustainability</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>N</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Sep 18 – 20, 2025</td> <!--* conf dates -->
+              <td>Switzerland 🇨🇭</td> <!--* conf location -->
+              <td>N</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://conference.socialdesignnetwork.org/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>The Image 2026 – International Conference On The Image</td> <!--* title -->
+              <td>Communication / Media</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>Common Ground</td> <!--* publisher -->
+              <td>Y</td> <!--* journal option -->
+              <td>Oct 01 – 02, 2026</td> <!--* conf dates -->
+              <td>Singapore 🇸🇬 + Online 🌐</td> <!--* conf location -->
+              <td>Sep 01, 2026</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://ontheimage.com/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>The Learner 2026 – International Conference on Learning</td> <!--* title -->
+              <td>AI / Education</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>Common Ground</td> <!--* publisher -->
+              <td>Y</td> <!--* journal option -->
+              <td>Jul 08 – 10, 2026</td> <!--* conf dates -->
+              <td>Hong Kong 🇭🇰 + Online 🌐</td> <!--* conf location -->
+              <td>Jun 08, 2026</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://thelearner.com/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>TKS 2026 – International Conference on Technology, Knowledge & Society</td> <!--* title -->
+              <td>HCI / AI </td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>Common Ground</td> <!--* publisher -->
+              <td>Y</td> <!--* journal option -->
+              <td>Apr 16 – 17, 2026</td> <!--* conf dates -->
+              <td>Greece 🇬🇷 + Online 🌐</td> <!--* conf location -->
+              <td>Jan 16, 2026</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://techandsoc.com/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Typoday 2026</td> <!--* title -->
+              <td>Typography / Communication</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>N</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>TBA (~Mar, 2026)</td> <!--* conf dates -->
+              <td>TBA</td> <!--* conf location -->
+              <td>TBA</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://www.typoday.in/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>UbiComp 2025</td> <!--* title -->
+              <td>HCI / Wearable</td> <!--* domian -->
+              <td>A*</td> <!--* ranking -->
+              <td>ACM</td> <!--* publisher -->
+              <td>N</td> <!--* journal option -->
+              <td>Oct 12 – 16, 2025</td> <!--* conf dates -->
+              <td>Finland 🇫🇮</td> <!--* conf location -->
+              <td>Mar 03, 2025</td> <!--* paper deadline -->
+              <td>Y</td> <!--* doctoral consortium -->
+              <td><a href="https://www.ubicomp.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>UbiLearn 2026 – International Conference on e-Learning & Innovative Pedagogies</td> <!--* title -->
+              <td>HCI / AI / Education</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>Common Ground</td> <!--* ranking -->
+              <td>Y</td> <!--* journal option -->
+              <td>Apr 16 – 17, 2026</td> <!--* conf dates -->
+              <td>Greece 🇬🇷 + Online 🌐</td> <!--* conf location -->
+              <td>Mar 16, 2026</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://ubi-learn.com/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Visual Discourse 2024 – International Conference on Research into Design of Visual Narratives</td>
+              <!--* title -->
+              <td>Communication</td> <!--* domian -->
+              <td>Unranked</td> <!--* ranking -->
+              <td>None</td> <!--* ranking -->
+              <td>N</td> <!--* journal option -->
+              <td>Nov 06 – 08, 2024</td> <!--* conf dates -->
+              <td>India 🇮🇳</td> <!--* conf location -->
+              <td>Oct 05, 2024</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://visualdiscourse.design/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>VRST 2025 – Virtual Reality Software and Technology</td> <!--* title -->
+              <td>HCI / XR</td> <!--* domian -->
+              <td>A</td> <!--* ranking -->
+              <td>ACM</td> <!--* ranking -->
+              <td>N</td> <!--* journal option -->
+              <td>Nov 12 – 14, 2025</td> <!--* conf dates -->
+              <td>Canada 🇨🇦</td> <!--* conf location -->
+              <td>Jul 07, 2025 AoE</td> <!--* paper deadline -->
+              <td>N</td> <!--* doctoral consortium -->
+              <td><a href="https://vrst.acm.org/vrst2025/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+
+
+          </tbody>
+        </table>
+
+
+      </div>
+
+
+
+
+      <div id="info" class="row col-xl-12 col-lg-12 col-md-12 col-sm-12">
+
+        <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12"
+          style="margin: 0px; padding-left: 0px; padding-right: 16px; padding-bottom: 8px;">
+          <p>
+            Conference rankings are based on <a href="https://portal.core.edu.au/conf-ranks/" target="_blank">CORE</a>.
+
+          </p>
+        </div>
+
+        <div id="infoColumn" class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+
+          <i class="material-symbols-outlined">
+            maps_ugc
+          </i>
+
+          <p class="link">
+            <span>
+              <a href="https://forms.gle/N2pRHhWGN5WXh7t66" target="_blank">
+                Share a missing event
+                <i class="material-symbols-outlined" style="font-size:16px; padding-top:0px; padding-left:4px;">
+                  arrow_outward
+                </i>
+              </a>
+            </span>
+          </p>
+        </div>
+
+        <div id="infoColumn" class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
+
+          <i class="material-symbols-outlined">
+            report
+          </i>
+          <p class="link">
+            <span>
+              <a href="https://forms.gle/iXQqzRB2434AoMzq9" target="_blank">
+                Report an error
+                <i class="material-symbols-outlined" style="font-size:16px; padding-top:0px; padding-left:4px;">
+                  arrow_outward
+                </i>
+              </a>
+            </span>
+          </p>
+        </div>
+
+      </div>
+
+      <div class="spacer_b60"></div>
+
+      <div id="info" class="row col-xl-12 col-lg-12 col-md-12 col-sm-12" style="padding-left:0px; padding-right:0px;">
+        <div class="row col-xl-12 col-lg-12 col-md-12 col-sm-12" style="padding-left: 0px; margin-left: 0px;">
+          <p class="label">
+            Curated by:
+          <p>
+            <a href="https://www.linkedin.com/in/aarishabh/" target="_blank">Rishabh</a>,&nbsp;<a
+              href="https://www.linkedin.com/in/madebyswati/" target="_blank">Swati</a>, and&nbsp;<a
+              href="https://www.linkedin.com/in/akanksha-bhardwaj-523803138/" target="_blank">Akanksha</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="spacer_b80"></div>
+
+
+    <!--- bottom nav card start -------------------->
+    <a href="/journallist.html" id="card-link-wrapper">
+
+      <div class="container-fluid" id="bottomNavCard">
+        <div class="container">
+
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" id="header">
+              <p class="label">More</p>
+              <div class="spacer_b40"></div>
+
+              <h1>Design Journals Database</h1>
+              <div class="spacer_b20"></div>
+
+              <div class="col-xl-6 col-lg-8 col-md-10 col-sm-12">
+                <p>
+                  A carefully curated list of journals relevant to design research and practice, making it easier
+                  to find suitable platforms to publish your research.
+                </p>
+              </div>
+
+              <span class="material-bg-icon material-symbols-outlined">menu_book</span>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+    <!--- bottom nav card end -------------------->
+
+
+
+    <!--- footer start -------------------->
+    <div class="containerfluid" id="footer">
+      <div class="container">
+        <div class="spacer_b80"></div>
+
+        <div class="row" style="background-color: none; padding-left:0px; padding-right:0px;">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" float="right" style="padding:0px">
+            <!--<div class="divider_b20"></div>-->
+          </div>
+
+          <div class="col-lg-6" style="padding-left:0px; padding-right:0px; float:left; align:left">
+
+            <p class="label">©2010—2025 Rishabh Pandey
+              <br><br>
+            </p>
+
+            <p>
+              Multidisciplinary designer <br>fluent in pixels and print.
+            </p>
+
+            <div class="spacer_b60"></div>
+
+          </div>
+
+
+          <div class="col-xl-2 col-lg-4 col-md-7 col-sm-12" style="padding-left:0px;">
+            <p class="label">Links</p>
+            <br>
+
+            <p>
+              <a class="footerText" href="https://rishabhpandey.com/work/" target="_blank">
+                Work
+                <!--span class="material-symbols-outlined">arrow_outward</span-->
+              </a>
+              <br>
+              <a class="footerText" href="https://rishabhpandey.com/about/" target="_blank">
+                About
+                <!--span class="material-symbols-outlined">arrow_outward</span-->
+              </a>
+              <br>
+              <a class="footerText" href="https://rishabhpandey.com/resources/" target="_blank">
+                Resources
+                <!--span class="material-symbols-outlined">arrow_outward</span-->
+              </a>
+              <br>
+              <a class="footerText" href="https://rishabhpandey.com/contact/" target="_blank">
+                Contact
+                <!--span class="material-symbols-outlined">arrow_outward</span-->
+              </a>
+            </p>
+          </div>
+
+
+          <div class="col-xl-3 col-lg-4 col-md-5 col-sm-12" style="padding-left:0px;">
+            <p class="label"></p>
+            <br><br>
+
+            <p>
+              <a class="footerText" href="mailto:hi@rishabhpandey.com" target="_blank">
+                hi@rishabhpandey.com
+                <i class="material-symbols-outlined">arrow_outward</i>
+              </a>
+              <br>
+
+              <a class="footerText" href="https://www.linkedin.com/in/aarishabh/" target="_blank">
+                LinkedIn
+                <i class="material-symbols-outlined">arrow_outward</i>
+              </a>
+              <br>
+
+              <a class="footerText" href="https://www.instagram.com/aarishabh/" target="_blank">
+                Instagram
+                <i class="material-symbols-outlined">arrow_outward</i>
+              </a>
+              <br>
+              <br>
+            </p>
+
+            <div class="d-none d-sm-block spacer_b80"></div>
+            <div class="spacer_b60"></div>
+          </div>
+
+          <div class=".d-none d-sm-block d-md-none spacer_b0"></div>
+          <div class="spacer_b20"></div>
+        </div>
+
+
+        <div class="col-lg-12" style="padding-left: 0px; margin-left: 0px;">
+          <!--a href="https://rishabhpandey.com/">
+        <!--img src="assets/Footer-name-for-website-2024.svg" alt="Rishabh Pandey footer logo" class="image"-->
+          <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" version="1.1"
+            viewBox="0 0 1869.83 240.82">
+            <defs>
+              <style>
+                .cls-1 {
+                  fill: rgb(255, 255, 255, 0.2);
+                  stroke-width: 0px;
+                }
+              </style>
+            </defs>
+            <path class="cls-1"
+              d="M129.7,150.28c-2.67-8.26-7.59-14.75-14.76-19.49-5.09-3.36-12.01-5.71-20.77-7.05v-2.06c14.45-.36,25.32-4.55,32.61-12.57,7.29-8.02,10.93-19.73,10.93-35.16v-6.74c0-20.4-5.59-36.04-16.76-46.91-11.17-10.87-28.9-16.3-53.19-16.3H0v232.8h56.29v-76.69h6.19c4.01,0,7.29.79,9.84,2.37,2.55,1.58,4.46,3.92,5.74,7.01,1.28,3.1,1.97,7.01,2.1,11.75l2.37,55.56h56.83l-4.37-56.83c-.85-11.54-2.61-21.43-5.28-29.69ZM80.7,89.08c0,8.87-1.28,15.12-3.83,18.76s-6.86,5.46-12.93,5.46h-8.02v-60.66h8.02c6.44,0,10.84,1.82,13.21,5.46s3.55,9.96,3.55,18.94v12.02ZM146.86,4.01h58.29v232.8h-58.29V4.01ZM327.69,142.36c2.49,7.35,3.73,16.3,3.73,26.87v4.55c0,21.5-5.59,38.04-16.76,49.64-11.17,11.6-28.05,17.4-50.64,17.4-6.92,0-13.3-.55-19.13-1.64-5.83-1.09-11.08-2.52-15.76-4.28-4.68-1.76-8.77-3.67-12.3-5.74l-3.46-51.55c4.74,2.55,10.26,5.01,16.58,7.38,6.31,2.37,13.3,3.55,20.95,3.55s13.05-1.52,16.58-4.55c3.52-3.03,5.28-7.35,5.28-12.93v-3.1c0-4.37-.85-8.11-2.55-11.2-1.7-3.1-4.19-6.19-7.47-9.29-3.28-3.1-7.35-6.77-12.2-11.02-7.77-6.92-14.54-13.75-20.31-20.49-5.77-6.74-10.23-14.09-13.39-22.04-3.16-7.95-4.74-17.09-4.74-27.42v-4.19c0-19.55,5.43-34.82,16.3-45.81C239.28,5.5,254.74,0,274.77,0c10.08,0,18.94,1.34,26.6,4.01,7.65,2.67,13.96,5.77,18.94,9.29l3.28,49.37c-4.13-2.79-8.96-5.34-14.48-7.65-5.53-2.31-11.87-3.46-19.04-3.46-4.25,0-7.83.58-10.75,1.73-2.91,1.16-5.07,2.89-6.47,5.19-1.4,2.31-2.1,5.16-2.1,8.56v.91c0,3.89.91,7.47,2.73,10.75,1.82,3.28,4.67,6.77,8.56,10.47,3.89,3.71,8.8,8.17,14.75,13.39,7.89,6.8,14.39,13.3,19.49,19.49,5.1,6.19,8.89,12.96,11.39,20.31ZM424.44,4.01h58.29v232.8h-58.29v-93.08h-27.51v93.08h-58.29V4.01h58.29v89.44h27.51V4.01ZM519.24,4.01l-30.6,232.8h56.47l4.56-51.55h28.59l4.56,51.55h56.47l-30.6-232.8h-89.44ZM553.51,141.72l8.53-96.55h3.83l8.53,96.55h-20.9ZM740.27,110.57v-1.64c14.81-1.21,25.38-5.56,31.7-13.02,6.31-7.47,9.47-17.88,9.47-31.24v-5.1c0-17.97-5.65-31.73-16.94-41.26-11.29-9.53-29.27-14.3-53.92-14.3h-65.4v232.8h69.77c24.17,0,41.65-5.28,52.46-15.85,10.81-10.57,16.21-27.08,16.21-49.55v-7.47c0-15.3-2.98-27.42-8.93-36.34-5.95-8.93-17.43-14.6-34.43-17.03ZM699.83,51.19h9.11c6.19,0,10.63,1.67,13.3,5.01,2.67,3.34,4.01,8.72,4.01,16.12v4.01c0,7.41-1.34,12.78-4.01,16.12-2.67,3.34-7.1,5.01-13.3,5.01h-9.11v-46.27ZM727.7,168.5c0,7.17-1.34,12.42-4.01,15.76-2.67,3.34-7.41,5.01-14.21,5.01h-9.65v-48.82h9.65c6.8,0,11.54,1.67,14.21,5.01,2.67,3.34,4.01,8.59,4.01,15.76v7.29ZM876.75,4.01h58.29v232.8h-58.29v-93.08h-27.51v93.08h-58.29V4.01h58.29v89.44h27.51V4.01ZM1136.15,76.33c0-23.8-5.59-41.81-16.76-54.01-11.17-12.21-29.39-18.31-54.65-18.31h-65.94v232.8h56.29v-62.12h10.38c24.89,0,42.9-5.83,54.01-17.49,11.11-11.66,16.67-29.87,16.67-54.65v-26.23ZM1079.5,101.83c0,8.87-1.16,15.12-3.46,18.76-2.31,3.64-6.74,5.46-13.3,5.46h-8.01V52.65h8.01c6.56,0,10.99,1.82,13.3,5.46,2.31,3.64,3.46,9.96,3.46,18.94v24.77ZM1161.4,4.01l-30.6,232.8h56.47l4.56-51.55h28.59l4.56,51.55h56.47l-30.6-232.8h-89.44ZM1195.67,141.72l8.54-96.55h3.83l8.54,96.55h-20.9ZM1389.17,3.64h51.73v233.17h-75.42l-28.05-168.68h-1.82l3.83,116.77v51.92h-52.1V3.64h76.14l27.69,165.95h1.82l-3.83-114.03V3.64ZM1522.59,4.01h-68.31v232.8h68.31c25.75,0,44.33-6.22,55.74-18.67,11.41-12.45,17.12-30.57,17.12-54.38v-86.71c0-23.68-5.8-41.77-17.4-54.28-11.6-12.51-30.09-18.76-55.47-18.76ZM1538.62,163.58c0,8.38-1.49,14.39-4.46,18.03-2.98,3.64-7.86,5.46-14.66,5.46h-8.74V53.37h8.74c6.8,0,11.69,1.82,14.66,5.46,2.97,3.64,4.46,9.65,4.46,18.03v86.71ZM1662.27,4.01h53.92v50.28h-53.92v39.89h51.92v49h-51.92v42.63h53.92v51.01h-110.21V4.01h56.29ZM1869.83,4.01l-47.36,172v60.8h-55.74v-60.76l-47.91-172.05h57.75l10.57,63.39,6.01,41.53h2.92l6.01-41.53,10.02-63.39h57.75Z" />
+          </svg>
+          </a>
+        </div>
+        <div class="spacer_b40"></div>
+      </div>
+      <!--- footer end -------------------->
+    </div>
+
+
+    <!-- Custom js link -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+      integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
+      integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/script_theme.js" defer></script>
+    <script src="js/script_conf.js" defer></script>
+</body>
+
+</html>

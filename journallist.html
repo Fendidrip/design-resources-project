@@ -1,0 +1,3033 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index, follow">
+  <title>Design Journals Database • Resources for Designers by Rishabh Pandey</title>
+  <link rel="icon" type="image/x-icon" href="assets/Rishabh_Pandey_Fevicon.png">
+
+  <meta name="description"
+    content="A comprehensive and curated database of design journals worldwide. Essential resource for designers, researchers, and academics by Rishabh Pandey.">
+  <meta name="keywords"
+    content="design journals, design research journals, design academic journals, design publications, design journal list, design research resources, international design journals">
+  <meta name="author" content="Rishabh Pandey">
+
+  <meta property="og:title" content="Design Journals Database | Resources for Designers by Rishabh Pandey" />
+  <meta property="og:description"
+    content="Explore a comprehensive and curated database of design journals worldwide. An essential resource for designers, researchers, and academics by Rishabh Pandey." />
+  <meta property="og:url" content="https://resources.rishabhpandey.com/journallist.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Rishabh Pandey Design Resources" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Design Journals Database | Resources for Designers by Rishabh Pandey" />
+  <meta name="twitter:description"
+    content="Explore a comprehensive and curated database of design journals worldwide. An essential resource for designers, researchers, and academics by Rishabh Pandey." />
+
+  <link rel="canonical" href="https://resources.rishabhpandey.com/journallist.html" />
+
+  <!-- Bootstrap css link -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <!-- Bootstrap js link -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+  <!-- Custom css link -->
+  <link rel="stylesheet" href="css/styles-publish-v2.css" id="theme-link">
+
+  <!-- Custom fonts link -->
+  <link rel="preconnect" href="https://api.fontshare.com/">
+  <link href="https://api.fontshare.com/v2/css?f[]=public-sans@1,2&f[]=spline-sans@1&f[]=cabinet-grotesk@1&display=swap"
+    rel="stylesheet">
+
+  <!-- Custom icon font link -->
+  <link rel="preconnect" href="https://fonts.gstatic.com/">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3VM1XM2C88"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    // Configure for cross-domain tracking
+    gtag('config', 'G-3VM1XM2C88', {
+      cookie_domain: 'auto'
+    });
+  </script>
+
+
+  <!-- Firebase SDK start -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getDatabase, ref, onValue, runTransaction } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+    import { firebaseConfig } from "./js/firebase-config-journals.js"; // Use journals config
+
+    // Initialize Firebase & Database
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const likeRef = ref(db, "likes");
+    const visitorRef = ref(db, "visitors");
+
+    // 🔴 Unique keys for this page
+    const KEYPREFIX = "journ_";          // ← different from Conferences
+    const LIKE_KEY = KEYPREFIX + "liked";
+    const VISIT_KEY = KEYPREFIX + "vis_ts";
+
+    // 🔄 Fetch & Sync Live Like Count
+    onValue(likeRef, (snap) => {
+      document.getElementById("likeCount").innerText = snap.val() ?? 0;
+    });
+    onValue(visitorRef, (snap) => {
+      document.getElementById("visitorCount").innerText = snap.val() ?? 0;
+    });
+
+    // 👍 Like once per browser
+    window.likePage = function () {
+      if (localStorage.getItem(LIKE_KEY) === "1") return;
+      runTransaction(likeRef, (l) => (l || 0) + 1).then(() => {
+        localStorage.setItem(LIKE_KEY, "1");
+        const btn = document.getElementById("likeButtonContainer");
+        btn.classList.add("liked-animation");
+        setTimeout(() => btn.classList.remove("liked-animation"), 1000);
+      });
+    };
+
+    // 👤 Count visitor once per 24h
+    const DAY = 24 * 60 * 60 * 1000;
+    function shouldCountVisitor() {
+      const last = Number(localStorage.getItem(VISIT_KEY) || 0);
+      return Date.now() - last > DAY;
+    }
+    function markVisitor() {
+      localStorage.setItem(VISIT_KEY, Date.now().toString());
+    }
+    function countVisitorIfNeeded() {
+      if (!shouldCountVisitor()) return;
+      runTransaction(visitorRef, (v) => (v || 0) + 1).then(markVisitor);
+    }
+    window.addEventListener("load", countVisitorIfNeeded);
+
+  </script>
+  <!-- Firebase SDK end -->
+
+
+  <!-- Schema.org JSON-LD Markup for Journal Database -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    "name": "Design Journals Database",
+    "description": "A comprehensive and curated database of design research journals worldwide, covering domains like HCI, XR, communication, sustainability, and more.",
+    "url": "https://resources.rishabhpandey.com/journallist.html",
+    "creator": {
+      "@type": "Person",
+      "name": "Rishabh Pandey",
+      "url": "https://rishabhpandey.com"
+    },
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "keywords": [
+      "design journals",
+      "design research",
+      "HCI",
+      "XR",
+      "Communication",
+      "interaction design"
+    ]
+  }
+  </script>
+</head>
+
+
+<body onload="updateLikes()">
+
+
+  <!--- Back to top button ---------->
+  <button type="button" class="btn btn-danger btn-floating btn-lg" id="btn-back-to-top"
+    style="display: block; padding: 0px;">
+
+    <span class="material-symbols-outlined" style="font-size:32px; padding-top:4px; padding-right:0px;">
+      north
+    </span>
+  </button>
+  <!--- Back to top button end ---------->
+
+
+
+  <!--- absolute div start -------------------->
+  <div class="containerfuild">
+    <div class="container">
+
+      <!--- nav bar desktop start -------------------->
+      <div class="row" style="padding-top:0px; background-color: none;">
+
+        <!--- nav bar desktop start -------------------->
+        <div id="nav">
+          <!-- logo start ----->
+          <h2><a href="https://www.rishabhpandey.com">
+              <!--span style="text-transform:normal; color:#22D658;">Rishabh Pandey</span-->
+              <img src="https://rishabhpandey.com/wp-content/uploads/2024/06/Rishabh-Pandey-Logo-Trimmed-2024.svg"
+                alt="logo" style="width: 3.14rem; float: left;">
+            </a>
+          </h2>
+          <!-- logo end ----->
+
+          <i class="material-symbols-outlined">
+            menu
+          </i>
+
+          <div id="menu">
+            <h4><a href="https://rishabhpandey.com/work/">Work</a></h4>
+            <h4><a href="https://rishabhpandey.com/about/">About</a></h4>
+            <h4><a href="https://resources.rishabhpandey.com/" id="highlight">Resources</a></h4>
+            <h4><a href="https://rishabhpandey.com/contact/">Contact</a></h4>
+
+
+            <!-- Theme Toggle Switch -->
+            <div id="theme-toggle-container">
+              <!--span id="tooltip"-->
+              <button id="theme-label" onclick="toggleTheme()">
+
+                <i id="moon-icon" class="material-symbols-outlined">
+                  brightness_4
+                </i>
+
+                <i id="sun-icon" class="material-symbols-outlined" style="display: none;">
+                  brightness_5
+                </i>
+              </button>
+              <!--span class="tooltiptext tooltip-left">
+                Change Theme
+              </span-->
+            </div>
+          </div>
+
+          <div id="menuHam">
+            <h4><a href="https://rishabhpandey.com/work/">Work</a></h4>
+            <h4><a href="https://rishabhpandey.com/about/">About</a></h4>
+            <h4><a href="https://resources.rishabhpandey.com/" id="highlight">Resources</a></h4>
+            <h4><a href="https://rishabhpandey.com/contact/">Contact</a></h4>
+
+            <i class="ri-close-line"></i>
+
+            <!-- Theme Toggle Switch -->
+            <div id="theme-toggle-container">
+              <!--span id="tooltip"-->
+              <button id="theme-label" onclick="toggleTheme()">
+
+                <i id="moon-icon" class="material-symbols-outlined">
+                  brightness_4
+                </i>
+
+                <i id="sun-icon" class="material-symbols-outlined" style="display: none;">
+                  brightness_5
+                </i>
+              </button>
+              <!--span class="tooltiptext tooltip-left">
+                Change Theme
+              </span-->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--- nav bar desktop end -------------------->
+
+
+    <!--- spacer ---->
+    <div class="d-none d-sm-block spacer_b40"></div>
+    <div class="spacer_b20"></div>
+    <!--- spacer end ---->
+
+    <!--- main content start -------------------->
+    <div class="container" style="background-color: none;">
+
+      <div class="row">
+        <div class="col-xl-11 col-lg-11 col-md-11 col-sm-12" id="header">
+
+          <div class="col-xl-7 col-lg-9 col-md-12 col-sm-12">
+            <h1>
+              Design Journals
+            </h1>
+
+            <button id="likeButtonContainer" class="glow-on-hover" onclick="likePage()">
+              <i class="ri-heart-3-fill"></i>
+              <span id="likeCount">0</span>
+            </button>
+
+            <div id="visitorCountContainer">
+              <i class="material-symbols-outlined">
+                emoji_people
+              </i>
+              <span id="visitorCount">0</span></p>
+            </div>
+
+
+            <div class="spacer_b10"></div>
+            <p>
+              Struggling to find design-related journals? My friends and I compiled a list and turned it into this
+              site to make it easy for others to find and track them!
+            </p>
+
+            <div class="spacer_b40"></div>
+
+          </div>
+        </div>
+      </div>
+
+
+      <!-- filter script starts -->
+      <!--span class="h5">Sort data by: </span-->
+      <div class="row col-xl-12 col-lg-12 col-md-12 col-sm-12" id="filterContainer">
+        <div class="col-xl-10 col-lg-10 col-md-12 col-sm-12" id="filterLabel">
+
+          <!-- filter script starts -->
+          <fieldset>
+            <legend>
+              <p class="label">
+                <span style="display: inline-flex; align-items: center; margin-right: 16px;">
+                  Filter by Domain:
+              </p>
+            </legend>
+
+            <span style="float: left!important; margin-left:0px; margin-right: 16px;">
+              <p class="caption">
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter"
+                    value="Multidisciplinary" onchange="filterTable()"> Multidisciplinary</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="HCI"
+                    onchange="filterTable()"> HCI</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="XR"
+                    onchange="filterTable()"> XR</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter"
+                    value="Communication" onchange="filterTable()"> Communication</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter"
+                    value="Sustainability" onchange="filterTable()"> Sustainability</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="Industrial"
+                    onchange="filterTable()"> Industrial</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="Ergonomics"
+                    onchange="filterTable()"> Ergonomics</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="Craft"
+                    onchange="filterTable()"> Craft</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="Animation"
+                    onchange="filterTable()"> Animation</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="Games"
+                    onchange="filterTable()"> Games</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="AI"
+                    onchange="filterTable()"> AI</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="Education"
+                    onchange="filterTable()"> Education</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter"
+                    value="Transportation" onchange="filterTable()"> Transportation</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="Culture"
+                    onchange="filterTable()"> Culture</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="History"
+                    onchange="filterTable()"> History</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="Management"
+                    onchange="filterTable()"> Design Management</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="Health"
+                    onchange="filterTable()"> Health</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter"
+                    value="Architecture" onchange="filterTable()"> Architecture</label>
+                <label id="labelButton"><input type="checkbox" class="checkmark" name="domainFilter" value="Fashion"
+                    onchange="filterTable()"> Fashion</label>
+            </span>
+          </fieldset>
+          <!-- filter script end -->
+
+        </div>
+
+        <!-- search function script -->
+        <div class="col-xl-2 col-lg-2 col-md-12 col-sm-12" id="filterSearch">
+          <!--div class="spacer_b20"></div-->
+          <i class="material-symbols-outlined">
+            search
+          </i>
+          <input type="text" id="searchInput" onkeyup="myFunction()" placeholder="Search title">
+          <!--div id="noRecords">⚠️ No records found</div>
+              </select>
+            
+        <!-- search function script end -->
+        </div>
+
+      </div>
+
+
+      <!--div style="overflow-x:auto;"-->
+      <div class="table-container"> <!--for fixed table height -->
+        <!--div class="spacer_b20"></div-->
+        <table id="journalTable" class="header table table-hover table-dark">
+          <thead>
+            <tr id="HeadRow">
+              <th>#</th> <!-- Row number column -->
+              <th onclick="sortTable(1)">Journal Title</th>
+              <th onclick="sortTable(2)">Domains</th>
+              <th onclick="sortTable(3)">Best Quartile</th>
+              <th onclick="sortTable(4)">Impact Factor</th>
+              <th onclick="sortTable(5)">Acceptance Rate</th>
+              <th onclick="sortTable(6)">First Decision</th>
+              <th onclick="sortTable(7)">Publisher</th>
+              <th onclick="sortTable(8)">Publishing Type</th>
+              <th onclick="sortTable(9)">Open Access</th>
+              <th onclick="sortTable(10)">Website</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+
+            <tr>
+              <td>ACM Transactions on Computer-Human Interaction (TOCHI)</td>
+              <td>HCI / XR</td>
+              <td>Q1</td>
+              <td>5.8</td>
+              <td>NA</td>
+              <td>7 days</td>
+              <td>Association for Computing Machinery (ACM)</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://dl.acm.org/journal/tochi" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Advanced Design Research</td>
+              <td>Multidisciplinary / HCI / Design</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>48%</td>
+              <td>25 days</td>
+              <td>Elsevier + Northwestern Polytechnical University</td>
+              <td>Full Open Access</td>
+              <td>Y</td>
+              <td><a href="https://www.sciencedirect.com/journal/advanced-design-research" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Advances in Human-Computer Interaction</td>
+              <td>HCI / XR</td>
+              <td>Q3</td>
+              <td>1.9</td>
+              <td>10%</td>
+              <td>42 days</td>
+              <td>Wiley</td>
+              <td>Full Open Access</td>
+              <td>Y</td>
+              <td><a href="https://onlinelibrary.wiley.com/journal/3637" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Advertising & Society Quarterly</td>
+              <td>Communication / Advertising / Culture / History / Gender / Media</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Advertising Educational Foundation</td>
+              <td>Subscription</td>
+              <td>N</td>
+              <td><a href="https://muse.jhu.edu/journal/18" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>AIS/Design Journal – Storia e Ricerche</td>
+              <td>Design History</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>30 days</td>
+              <td>Italian Association of Design Historians</td>
+              <td>Full Open Access <p id=tag>Free</p>
+              </td>
+              <td>Y</td>
+              <td><a href="https://www.aisdesign.org/ser/index.php/SeR" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Animation</td> <!--* title -->
+              <td>Animation / Communication / Media</td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>0.6</td> <!--* impact factor -->
+              <td>NA</td> <!--* acceptance rate -->
+              <td>23 days</td> <!--* first dicision within days -->
+              <td>Sage</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://journals.sagepub.com/home/anma" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Applied Ergonomics</td> <!--* title -->
+              <td>Ergonomics / Industrial / Product / Engineering</td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>3.4</td> <!--* impact factor -->
+              <td>NA</td> <!--* acceptance rate -->
+              <td>5 days</td> <!--* first dicision within days -->
+              <td>Elsevier + Chartered Institute of Ergonomics and Human Factors</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://www.sciencedirect.com/journal/applied-ergonomics" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Archives of Design Research (ADR)</td>
+              <td>Multidisciplinary / HCI / Communication / Product / Transportation / Industrial / Theory / Method</td>
+              <td>Q1</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Korean Society of Design Science</td>
+              <td>Full Open Access</td>
+              <td>Y</td>
+              <td><a href="http://aodr.org/main.php" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Artifact</td>
+              <td>Design Practice / Craft / Sustainability / Visual Arts</td>
+              <td>Q2</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>The Royal Danish Academy + Design School Kolding</td>
+              <td>Full Open Access <p id=tag>Free</p>
+              </td>
+              <td>Y</td>
+              <td><a href="https://www.intellectbooks.com/artifact-journal-of-design-practice" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Artificial Intelligence for Engineering Design, Analysis and Manufacturing (AI EDAM)</td>
+              <!--* title -->
+              <td>AI / Industrial / Product / Engineering</td> <!--* areas of scope -->
+              <td>Q2</td> <!--* best quartile -->
+              <td>2.3</td> <!--* impact factor -->
+              <td>NA</td> <!--* acceptance rate -->
+              <td>NA</td> <!--* first dicision within days -->
+              <td>Cambridge University Press + The Design Society</td> <!--* publisher -->
+              <td>Full Open Access</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://www.cambridge.org/core/journals/ai-edam" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Asian Ethnicity</td>
+              <td>Multidisciplinary / HCI / Product / Communication</td>
+              <td>Q1</td>
+              <td>0.9</td>
+              <td>17%</td>
+              <td>10 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/caet20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Automotive Innovation</td>
+              <td>Transportation / Industrial / HMI / Method</td>
+              <td>Q1</td>
+              <td>5</td>
+              <td>NA</td>
+              <td>8 days</td>
+              <td>Springer</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://link.springer.com/journal/42154" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Behaviour and Information Technology</td>
+              <td>HCI / UX / Ergonomics</td>
+              <td>Q1</td>
+              <td>3.1</td>
+              <td>10%</td>
+              <td>9 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/tbit20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Clothing and Textiles Research Journal (CTRJ)</td>
+              <td>Textile / Fashion / Design / Consumer Behavior / History / Culture / Education</td>
+              <td>Q1</td>
+              <td>2.4</td>
+              <td>5.4%</td>
+              <td>13 days</td>
+              <td>Sage</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://journals.sagepub.com/home/CTR" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>CoDesign</td>
+              <td>Collaboration / HCI / Design / Arts</td>
+              <td>Q1</td>
+              <td>2.6</td>
+              <td>22%</td>
+              <td>28 days</td>
+              <td>Taylor and Francis + The Design Society</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/ncdn20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Cogent Arts & Humanities</td>
+              <td>Communication / Media / Cultural Heritage / History / Visual Art</td>
+              <td>Q2</td>
+              <td>0.9</td>
+              <td>30%</td>
+              <td>33 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/oaah20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Communication and the Public</td> <!--* title -->
+              <td>Communication / Media / Advertising / Culture / Theory</td> <!--* areas of scope -->
+              <td>Q2</td> <!--* best quartile -->
+              <td>1.5</td> <!--* impact factor -->
+              <td>NA</td> <!--* acceptance rate -->
+              <td>NA</td> <!--* first dicision within days -->
+              <td>Sage</td> <!--* publisher -->
+              <td>Full Open Access <p id=tag>Free</p>
+              </td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://journals.sagepub.com/home/CTP" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Communication Research</td> <!--* title -->
+              <td>Multidisciplinary / Communication / Media / Advertising / HCI / Culture / Theory</td>
+              <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>3.2</td> <!--* impact factor -->
+              <td>8.7%</td> <!--* acceptance rate -->
+              <td>39 days</td> <!--* first dicision within days -->
+              <td>Sage</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://journals.sagepub.com/home/crxa" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Communication Theory</td>
+              <td>Communication / Advertising / Culture / Society / Media / Ethics / Gender</td>
+              <td>Q1</td>
+              <td>6.2</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Oxford University Press</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://academic.oup.com/ct/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Computer-Aided Design</td> <!--* title -->
+              <td>Product / Industrial / HCI / XR</td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>3.1</td> <!--* impact factor -->
+              <td>16%</td> <!--* acceptance rate -->
+              <td>7 days</td> <!--* first dicision within days -->
+              <td>Elsevier</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://www.sciencedirect.com/journal/computer-aided-design" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Computers & Education</td>
+              <td>HCI / Education</td>
+              <td>Q1</td>
+              <td>10.5</td>
+              <td>NA</td>
+              <td>6 days</td>
+              <td>Elsevier</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.sciencedirect.com/journal/computers-and-education" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Computers & Education Open</td>
+              <td>HCI / Education</td>
+              <td>Q1</td>
+              <td>5.7</td>
+              <td>NA</td>
+              <td>32 days</td>
+              <td>Elsevier</td>
+              <td>Full Open Access</td>
+              <td>Y</td>
+              <td><a href="https://www.sciencedirect.com/journal/computers-and-education-open" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Computers & Graphics</td>
+              <td>HCI / Graphics / XR </td>
+              <td>Q2</td>
+              <td>2.8</td>
+              <td>NA</td>
+              <td>2 days</td>
+              <td>Elsevier</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.sciencedirect.com/journal/computers-and-graphics" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Computers in Human Behavior</td>
+              <td>HCI / Psychology</td>
+              <td>Q1</td>
+              <td>8.9</td>
+              <td>NA</td>
+              <td>9 days</td>
+              <td>Elsevier</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.sciencedirect.com/journal/computers-in-human-behavior" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Craft Research</td>
+              <td>Craft / Material / Design / Aesthetic / Method / Process</td>
+              <td>Q1</td>
+              <td>2.4</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Intellect</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td><a href="https://www.intellectbooks.com/craft-research" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Creativity and Innovation Management</td>
+              <td>Creativity / Strategy / Management / Innovation</td>
+              <td>Q1</td>
+              <td>4.2</td>
+              <td>7%</td>
+              <td>9 days</td>
+              <td>Wiley</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://onlinelibrary.wiley.com/journal/14678691" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Cubic Journal</td>
+              <td>Multidisciplinary / Design Research / Method / HCI / Communication /
+                Sustainability / Product / Design Management / Ergonomics</td>
+              <td>Q3</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>The Hon Kong Polytechnic University + Jap Sam</td>
+              <td>Full Open Access <p id=tag>Free</p>
+              </td>
+              <td>Y</td>
+              <td><a href="https://cubicjournal.org/index.php/cubic/index" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Designs</td>
+              <td>Multidisciplinary / HCI / Engineering / Industrial / Product / Ergonomics / Transportation /
+                Architecture / Theory / Method / Design Management</td>
+              <td>Q2</td>
+              <td>2.9</td>
+              <td>NA</td>
+              <td>18 days</td>
+              <td>Multidisciplinary Digital Publishing Institute (MDPI)</td>
+              <td>Full Open Access</td>
+              <td>Y</td>
+              <td><a href="https://www.mdpi.com/journal/designs" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Designing</td>
+              <td>Multidisciplinary / HCI / Commununication / Industrial / Health / Bio-Design / Service Design
+                / Architecture / Policy Design / History / Theory / Ethics / Method</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Sage + Design Research Society</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://journals.sagepub.com/home/DES" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Design and Culture</td>
+              <td>Multidisciplinary / Commununication / Culture / Gender / Craft</td>
+              <td>Q1</td>
+              <td>1.1</td>
+              <td>8%</td>
+              <td>80 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/rfdc20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Design for Health</td>
+              <td>Multidisciplinary / Health</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>53%</td>
+              <td>140 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/rfdh20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Design Issues</td>
+              <td>Multidisciplinary / Communication / History / Theory / HCI</td>
+              <td>Q2</td>
+              <td>0.4</td>
+              <td>11%</td>
+              <td>NA</td>
+              <td>MIT Press Direct</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://direct.mit.edu/desi" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Design Science</td>
+              <td>Multidisciplinary / Product / Industrial / Commununication / HCI / Service / Theory / History /
+                Education
+              </td>
+              <td>Q1</td>
+              <td>NA</td>
+              <td>11%</td>
+              <td>NA</td>
+              <td>Cambridge University Press + The Design Society</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.cambridge.org/core/journals/design-science" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Design Studies</td>
+              <td>Multidisciplinary / HCI / Product / Industrial / AI / Education / Design Management / Communication /
+                Games /
+                Architecture</td>
+              <td>Q1</td>
+              <td>4.8</td>
+              <td>NA</td>
+              <td>22 days</td>
+              <td>Elsevier</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.sciencedirect.com/journal/design-studies" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Dialectic</td>
+              <td>Communication</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>AIGA Design Educators Community + Michigan Publishing</td>
+              <td>Full Open Access <p id=tag>Free</p>
+              </td> <!--Free-->
+              <td>Y</td>
+              <td><a href="https://journals.publishing.umich.edu/dialectic/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Digital Applications in Archaeology and Cultural Heritage (DAACH)</td>
+              <td>HCI / XR / Cultural Heritage</td>
+              <td>Q1</td>
+              <td>2.9</td>
+              <td>NA</td>
+              <td>71 days</td>
+              <td>Elsevier</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a
+                  href="https://www.sciencedirect.com/journal/digital-applications-in-archaeology-and-cultural-heritage"
+                  target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Digital Creativity</td>
+              <td>Multidisciplinary / HCI / Product / Industrial / AI / Education / Design Management / Communication /
+                Games /
+                Architecture</td>
+              <td>Q1</td>
+              <td>2.7</td>
+              <td>11%</td>
+              <td>112 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/ndcr20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Discourse & Communication</td> <!--* title -->
+              <td>Communication / Typography / Media / Culture / Theory / Method</td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>2.2</td> <!--* impact factor -->
+              <td>7.7%</td> <!--* acceptance rate -->
+              <td>6 days</td> <!--* first dicision within days -->
+              <td>Sage</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://journals.sagepub.com/home/DCM" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Discourse & Society</td> <!--* title -->
+              <td>Communication / Typography / Media / Culture / Gender / Theory / Method</td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>2.7</td> <!--* impact factor -->
+              <td>11.6%</td> <!--* acceptance rate -->
+              <td>10 days</td> <!--* first dicision within days -->
+              <td>Sage</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://journals.sagepub.com/home/DAS" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Discourse Studies</td> <!--* title -->
+              <td>Communication / Typography / Media / Culture / Gender / Theory / Method</td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>1.7</td> <!--* impact factor -->
+              <td>20.2%</td> <!--* acceptance rate -->
+              <td>12 days</td> <!--* first dicision within days -->
+              <td>Sage</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://journals.sagepub.com/home/DIS" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Disegno Industriale Industrial Design (DIID)</td>
+              <td>Multidisciplinary / Product / Commununication / HCI / Fashion / Service / Sustainability / Culture /
+                Education / Method</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>30 days</td>
+              <td>Bologna University Press</td>
+              <td>Full Open Access <p id=tag>Free</p>
+              </td>
+              <td>Y</td>
+              <td><a href="https://www.diid.it/diid/index.php/diid/index" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Displays</td>
+              <td>Multidisciplinary / HCI / Product / Industrial / AI / Education / Design Management / Communication /
+                Games /
+                Architecture</td>
+              <td>Q2</td>
+              <td>3.4</td>
+              <td>NA</td>
+              <td>3 days</td>
+              <td>Elsevier</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.sciencedirect.com/journal/displays" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Diseña</td>
+              <td>Multidisciplinary / Communication / HCI / Industrial / Gender / Ethnography / Method / Design Practice
+              </td>
+              <td>Q2</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Pontificia Universidad Católica de Chile</td>
+              <td>Full Open Access <p id=tag>Free</p>
+              </td>
+              <td>Y</td>
+              <td><a href="https://revistadisena.uc.cl/index.php/Disena/index" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Early Popular Visual Culture (EPVC)</td>
+              <td>Communication / Culture / Cinema / Photography / Illustration / History</td>
+              <td>Q3</td>
+              <td>0.13</td>
+              <td>23%</td>
+              <td>36 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/repv20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Education and Information Technologies</td>
+              <td>HCI / Education</td>
+              <td>Q1</td>
+              <td>5.4</td>
+              <td>NA</td>
+              <td>19 days</td>
+              <td>Springer</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://link.springer.com/journal/10639" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Emerging Media</td> <!--* title -->
+              <td>Communication / Media / Technology</td> <!--* areas of scope -->
+              <td>NA</td> <!--* best quartile -->
+              <td>Na</td> <!--* impact factor -->
+              <td>NA</td> <!--* acceptance rate -->
+              <td>NA</td> <!--* first dicision within days -->
+              <td>Shanghai Jiao Tong University + Sage</td> <!--* publisher -->
+              <td>Full Open Access <p id=tag>Free</p>
+              </td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://journals.sagepub.com/home/EMM" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Empirical Studies of the Arts</td>
+              <td>Communication / Semiotics / Creativity / Visual Arts / Aesthetics / Method</td>
+              <td>Q1</td>
+              <td>1.4</td>
+              <td>10%</td>
+              <td>17 days</td>
+              <td>Sage</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://journals.sagepub.com/home/ART" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Ergonomics</td> <!--* title -->
+              <td>Ergonomics / Industrial / Product / Engineering</td> <!--* areas of scope -->
+              <td>Q2</td> <!--* best quartile -->
+              <td>2.4</td> <!--* impact factor -->
+              <td>23%</td> <!--* acceptance rate -->
+              <td>19 days</td> <!--* first dicision within days -->
+              <td>Taylor and Francis + Chartered Institute of Ergonomics and Human Factors</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://www.tandfonline.com/journals/terg20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Ergonomics in Design: The Quarterly of Human Factors Applications</td> <!--* title -->
+              <td>Ergonomics / Industrial / Product / Engineering</td> <!--* areas of scope -->
+              <td>Q3</td> <!--* best quartile -->
+              <td>0.7</td> <!--* impact factor -->
+              <td>29.5%</td> <!--* acceptance rate -->
+              <td>43 days</td> <!--* first dicision within days -->
+              <td>Sage</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://journals.sagepub.com/home/erg" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Fashion and Textiles</td>
+              <td>Fashion / Textile / Material / Method / Process / Trend / History / Culture</td>
+              <td>Q1</td>
+              <td>3.5</td>
+              <td>NA</td>
+              <td>26 days</td>
+              <td>Springer</td>
+              <td>Full Open Access</td>
+              <td>Y</td>
+              <td><a href="https://fashionandtextiles.springeropen.com/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Fashion Practice</td> <!--* title -->
+              <td>Fashion / Textile / Material / HCI / AI / Ethics / Method</td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>2.2</td> <!--* impact factor -->
+              <td>21%</td> <!--* acceptance rate -->
+              <td>86 days</td> <!--* first dicision within days -->
+              <td>Taylor and Francis</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://www.tandfonline.com/journals/rffp20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Fashion Theory – Journal of Dress Body and Culture</td> <!--* title -->
+              <td>Fashion / Textile</td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>1.2</td> <!--* impact factor -->
+              <td>37%</td> <!--* acceptance rate -->
+              <td>93 days</td> <!--* first dicision within days -->
+              <td>Taylor and Francis</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://www.tandfonline.com/journals/rfft20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Games and Culture</td> <!--* title -->
+              <td>Games / Communication / Media / Culture</td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>1.6</td> <!--* impact factor -->
+              <td>11.8%</td> <!--* acceptance rate -->
+              <td>18 days</td> <!--* first dicision within days -->
+              <td>Sage</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://journals.sagepub.com/home/gaca" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Gender, Place & Culture</td>
+              <td>Communication / Culture / Gender</td>
+              <td>Q1</td>
+              <td>1.1</td>
+              <td>9%</td>
+              <td>20 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/cgpc20/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Global Media and Communication</td> <!--* title -->
+              <td>Communication / Media / Culture / Policy / Society</td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>0.9</td> <!--* impact factor -->
+              <td>4.3%</td> <!--* acceptance rate -->
+              <td>99 days</td> <!--* first dicision within days -->
+              <td>Sage</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://journals.sagepub.com/home/GMC" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Graphica</td>
+              <td>Communication / Graphics</td>
+              <td>Q2</td>
+              <td>0.7</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Autonomous University of Barcelona</td>
+              <td>Full Open Access <p id=tag>Free</p>
+              </td>
+              <td>Y</td>
+              <td><a href="https://revistes.uab.cat/grafica/index" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Human Behavior and Emerging Technologies</td>
+              <td>Multidisciplinary / HCI / Product / Industrial / AI / Education / Design Management / Communication /
+                Games /
+                Architecture</td>
+              <td>Q1</td>
+              <td>3</td>
+              <td>16%</td>
+              <td>79 days</td>
+              <td>Wiley</td>
+              <td>Full Open Access</td>
+              <td>Y</td>
+              <td><a href="https://onlinelibrary.wiley.com/journal/hbet/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Human–Computer Interaction</td>
+              <td>HCI / XR</td>
+              <td>Q1</td>
+              <td>4.5</td>
+              <td>8%</td>
+              <td>13 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/hhci20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Human Factors and Ergonomics in Manufacturing and Service Industries</td> <!--* title -->
+              <td>Ergonomics / Industrial / Product / Engineering / Safety</td> <!--* areas of scope -->
+              <td>Q2</td> <!--* best quartile -->
+              <td>2.2</td> <!--* impact factor -->
+              <td>9%</td> <!--* acceptance rate -->
+              <td>11 days</td> <!--* first dicision within days -->
+              <td>Wiley</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://onlinelibrary.wiley.com/journal/15206564" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Human Factors: The Journal of the Human Factors and Ergonomics Society</td> <!--* title -->
+              <td>Ergonomics / Industrial / Product / Engineering / Safety / Method / Theory</td>
+              <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>3.3</td> <!--* impact factor -->
+              <td>10.7%</td> <!--* acceptance rate -->
+              <td>32 days</td> <!--* first dicision within days -->
+              <td>Sage</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://journals.sagepub.com/home/hfs" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>IEEE Computer Graphics and Applications</td>
+              <td>HCI / XR</td>
+              <td>Q3</td>
+              <td>1.4</td>
+              <td>NA</td>
+              <td>60 days</td>
+              <td>IEEE</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=38" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>IEEE Transactions on Visualization and Computer Graphics (TVCG)</td>
+              <td>HCI / XR</td>
+              <td>Q1</td>
+              <td>6.5</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>IEEE</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://ieeexplore.ieee.org/xpl/RecentIssue.jsp?punumber=2945" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>InfoDesign</td> <!--* title -->
+              <td>Multidisciplinary / HCI / Communication / Information Design / Education / History / Theory / Method
+              </td> <!--* areas of scope -->
+              <td>Q2</td> <!--* best quartile -->
+              <td>NA</td> <!--* impact factor -->
+              <td>NA</td> <!--* acceptance rate -->
+              <td>NA</td> <!--* first dicision within days -->
+              <td>Brazilian Information Design Society</td> <!--* publisher -->
+              <td>Full Open Access <p id=tag>Free</p>
+              </td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://www.infodesign.org.br/infodesign/index" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Information Design Journal (IDJ)</td>
+              <td>Communication / Information Design / HCI</td>
+              <td>Q3</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>John Benjamins</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a
+                  href="https://www.benjamins.com/catalog/idj?srsltid=AfmBOoo-hjesPu4k9QQ5k6VOIGFpDa9GIKST2eoNQZyw73Ex_LoL6At0"
+                  target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Information Visualization</td> <!--* title -->
+              <td>Communication / Information Design / Visualization</td> <!--* areas of scope -->
+              <td>Q3</td> <!--* best quartile -->
+              <td>2</td> <!--* impact factor -->
+              <td>4.2%</td> <!--* acceptance rate -->
+              <td>16 days</td> <!--* first dicision within days -->
+              <td>Sage</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://journals.sagepub.com/home/IVI" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Innovations in Education and Teaching International</td>
+              <td>Education</td>
+              <td>Q1</td>
+              <td>4.9</td>
+              <td>10%</td>
+              <td>5 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/riie20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Interacting with Computers</td>
+              <td>HCI / XR</td>
+              <td>Q2</td>
+              <td>1.3</td>
+              <td>NA</td>
+              <td>21 days</td>
+              <td>Oxford University Press</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://academic.oup.com/iwc" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>International Journal of Art & Design Education</td> <!--* title -->
+              <td>Multidisciplinary / Education</td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>1.2</td> <!--* impact factor -->
+              <td>21%</td> <!--* acceptance rate -->
+              <td>NA</td> <!--* first dicision within days -->
+              <td>Wiley + National Society for Education in Art & Design</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://onlinelibrary.wiley.com/journal/14768070" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>International Journal of Asia Digital Art and Design</td>
+              <td>Communication / Digital / Art</td>
+              <td>Q3</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Asia Digital Art and Design Association</td>
+              <td>Full Open Access</td>
+              <td>Y</td>
+              <td><a href="https://www.jstage.jst.go.jp/browse/adada/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>International Journal of Communication (IJOC)</td>
+              <td>Communication / Media</td>
+              <td>Q1</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>USC Annberg</td>
+              <td>Full Open Access <p id=tag>Free</p>
+              </td>
+              <td>Y</td>
+              <td><a href="https://ijoc.org/index.php/ijoc/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>International Journal of Cultural Studies</td> <!--* title -->
+              <td>Communication / Media / Culture / History</td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>1.8</td> <!--* impact factor -->
+              <td>10%</td> <!--* acceptance rate -->
+              <td>9 days</td> <!--* first dicision within days -->
+              <td>Sage</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://journals.sagepub.com/home/ICS" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>International Journal of Design (IJD)</td>
+              <td>Multidisciplinary / HCI / XR / Industrial / Communication / Sustainability / Ergonomics / Design
+                Management /
+                Culture / Theory</td>
+              <td>Q1</td>
+              <td>1.8</td>
+              <td>11%</td>
+              <td>30 days</td>
+              <td>Chinese Institute of Design</td>
+              <td>Full Open Access</td>
+              <td>Y</td>
+              <td><a href="http://www.ijdesign.org/index.php/IJDesign" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>International Journal of Design Creativity and Innovation</td>
+              <td>Multidisciplinary / HCI / XR / Ergonomics / AI / Creativity / Industrial / Architecture / Art /
+                Psychology</td>
+              <td>Q1</td>
+              <td>2.5</td>
+              <td>8%</td>
+              <td>21 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/tdci20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>International Journal of Fashion Design, Technology and Education</td>
+              <td>Multidisciplinary / Fashion / Textile / Ergonomics / Industrial / Education / Media / HCI</td>
+              <td>Q1</td>
+              <td>2.2</td>
+              <td>37%</td>
+              <td>16 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/tfdt20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>International Journal of Human-Computer Studies</td>
+              <td>HCI / XR / CUI / Digital Games / Theory / Health / Aeging / Wearable</td>
+              <td>Q1</td>
+              <td>5.1</td>
+              <td>NA</td>
+              <td>13 days</td>
+              <td>Elsevier</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.sciencedirect.com/journal/international-journal-of-human-computer-studies"
+                  target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>International Journal of Human–Computer Interaction</td>
+              <td>HCI / Cognitive / Creativity / Social / Health / Ergonomics</td>
+              <td>Q1</td>
+              <td>4.9</td>
+              <td>18%</td>
+              <td>41 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/hihc20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>International Journal of Industrial Ergonomics</td> <!--* title -->
+              <td>Ergonomics / Industrial / Product / Engineering / Manufacturing / Safety</td>
+              <!--* areas of scope -->
+              <td>Q2</td> <!--* best quartile -->
+              <td>3</td> <!--* impact factor -->
+              <td>NA</td> <!--* acceptance rate -->
+              <td>4 days</td> <!--* first dicision within days -->
+              <td>Elsevier</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://www.sciencedirect.com/journal/international-journal-of-industrial-ergonomics"
+                  target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>International Journal of Occupational Safety and Ergonomics (JOSE)</td> <!--* title -->
+              <td>Ergonomics / Industrial / Product / Engineering / Safety</td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>2.6</td> <!--* impact factor -->
+              <td>22%</td> <!--* acceptance rate -->
+              <td>29 days</td> <!--* first dicision within days -->
+              <td>Taylor and Francis</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://www.tandfonline.com/journals/tose20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>International Journal of Technology and Design Education</td>
+              <td>Education / HCI / XR</td>
+              <td>Q1</td>
+              <td>2.7</td>
+              <td>NA</td>
+              <td>71 days</td>
+              <td>Springer</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.springer.com/journal/10798" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>International Journal on Interactive Design and Manufacturing (IJIDeM)</td>
+              <td>Product / HCI / XR / Manufacturing</td>
+              <td>Q2</td>
+              <td>2.5</td>
+              <td>NA</td>
+              <td>23 days</td>
+              <td>Springer</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://link.springer.com/journal/12008" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Interaction Design and Architecture(s) (IxD&A)</td>
+              <td>Multidisciplinary / HCI / Interaction Design / Architecture</td>
+              <td>Q2</td>
+              <td>1.6</td>
+              <td>10%</td>
+              <td>30 days</td>
+              <td>ASLERD</td>
+              <td>Full Open Acess <p id=tag>Free</p>
+              </td> <!--Free-->
+              <td>Y</td>
+              <td><a href="https://ixdea.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Advertising Education (JAE)</td> <!--* title -->
+              <td>Communication / Advertising / Media / Education</td> <!--* areas of scope -->
+              <td>Q3</td> <!--* best quartile -->
+              <td>NA</td> <!--* impact factor -->
+              <td>29.3%</td> <!--* acceptance rate -->
+              <td>18 days</td> <!--* first dicision within days -->
+              <td>Sage</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://journals.sagepub.com/home/ADV" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Aesthetics and Phenomenology</td> <!--* title -->
+              <td>Communication / Visual Arts / Culture / Method</td> <!--* areas of scope -->
+              <td>Q3</td> <!--* best quartile -->
+              <td>0.2</td> <!--* impact factor -->
+              <td>NA</td> <!--* acceptance rate -->
+              <td>NA</td> <!--* first dicision within days -->
+              <td>Taylor and Francis</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://www.tandfonline.com/journals/rfap20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Creative Communications (JOCC)</td>
+              <td>Multidisciplinary / Creativity / Communication / Culture / Media / Marketing / Management</td>
+              <td>Q2</td>
+              <td>0.7</td>
+              <td>20.2%</td>
+              <td>85 days</td>
+              <td>Sage</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://journals.sagepub.com/home/crc/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Communication</td>
+              <td>Communication / Media / Theory</td>
+              <td>Q1</td>
+              <td>5.5</td>
+              <td>NA</td>
+              <td>90 days</td>
+              <td>Oxford University Press</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://academic.oup.com/joc/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Communication Inquiry</td> <!--* title -->
+              <td>Communication / Media / Culture / History </td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>1.1</td> <!--* impact factor -->
+              <td>17.5%</td> <!--* acceptance rate -->
+              <td>21 days</td> <!--* first dicision within days -->
+              <td>Sage</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://journals.sagepub.com/home/JCI" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Cultural Heritage (JCH)</td>
+              <td>Cultural Heritage / Preservation / Communication / XR / Architecture</td>
+              <td>Q1</td>
+              <td>3.3</td>
+              <td>NA</td>
+              <td>4 days</td>
+              <td>Elsevier</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.sciencedirect.com/journal/journal-of-cultural-heritage" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Design, Business & Society</td>
+              <td>Multidisciplinary / Culture / Design Management / Society</td>
+              <td>Q1</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Intellect</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td><a href="https://www.intellectbooks.com/journal-of-design-business-society" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Design History</td>
+              <td>Design History / Theory / Communication / Product / Industrial / Craft / Fashion / Architecture
+              </td>
+              <td>Q2</td>
+              <td>1</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Oxford University Press</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://academic.oup.com/jdh" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Design Research (JDR)</td>
+              <td>Multidisciplinary / HCI / Communication / Sustainability / Education / Method</td>
+              <td>Q4</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Inderscience</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.inderscience.com/jhome.php?jcode=jdr" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Documentation</td>
+              <td>HCI / Communication / Media / Cognitive</td>
+              <td>Q1</td>
+              <td>2.4</td>
+              <td>27.1%</td>
+              <td>37 days</td>
+              <td>Emerald</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.emeraldgrouppublishing.com/journal/jd" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Engineering Design</td>
+              <td>Industrial / Product / Engineering / Innovation / Design Management</td>
+              <td>Q1</td>
+              <td>3.4</td>
+              <td>18%</td>
+              <td>4 days</td>
+              <td>Taylor and Francis + The Design Society</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/cjen20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Entrepreneurship and Innovation in Emerging Economies</td>
+              <td>Multidisciplinary / Innovation / Policy / Sustainability / Management / Finance</td>
+              <td>Q3</td>
+              <td>NA</td>
+              <td>52.2%</td>
+              <td>NA</td>
+              <td>Sage</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://journals.sagepub.com/home/EIE" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Intelligent Transportation Systems</td>
+              <td>Transportation</td>
+              <td>Q2</td>
+              <td>2.8</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/gits20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Interior Design (JID)</td>
+              <td>Multidisciplinary / Sustainability / Built environment</td>
+              <td>Q1</td>
+              <td>1.2</td>
+              <td>10%</td>
+              <td>42 days</td>
+              <td>Sage</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://journals.sagepub.com/home/IDX" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Mechanical Design</td> <!--* title -->
+              <td>Multidisciplinary / Industrial / Product / Engineering / XR / AI / Sustainability /
+                Education / Theory / Method</td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>3</td> <!--* impact factor -->
+              <td>NA</td> <!--* acceptance rate -->
+              <td>NA</td> <!--* first dicision within days -->
+              <td>American Society of Mechanical Engineers + The Design Society</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="http://www.asmejmd.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal on Multimodal User Interfaces</td>
+              <td>Multidisciplinary / HCI / XR / Ergonomics</td>
+              <td>Q2</td>
+              <td>2.1</td>
+              <td>NA</td>
+              <td>52 days</td>
+              <td>Springer</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://link.springer.com/journal/12193/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Responsible Innovation (JRI)</td>
+              <td>Multidisciplinary / Innovation / Ethics / Policy / Management / Governance / Culture</td>
+              <td>Q1</td>
+              <td>4.1</td>
+              <td>28%</td>
+              <td>7 days</td>
+              <td>Taylor and Francis</td>
+              <td>Full Open Access</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/tjri20/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Semantics</td>
+              <td>Communication / Semiotics / Semantics / Culture / Language</td>
+              <td>Q1</td>
+              <td>1.1</td>
+              <td>NA</td>
+              <td>90 days</td>
+              <td>Oxford University Press</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://academic.oup.com/jos" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Southeast Asian Studies</td>
+              <td>Communication / Culture / Cinema</td>
+              <td>Q2</td>
+              <td>0.4</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Cambridge University Press</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.cambridge.org/core/journals/journal-of-southeast-asian-studies/"
+                  target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Textile Design Research and Practice</td>
+              <td>Fashion / Textile / Sustainability / Education / Method</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>31%</td>
+              <td>NA</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/rftd20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Transportation Engineering, Part A: Systems</td>
+              <td>Transportation / Design / Planning / </td>
+              <td>Q2</td>
+              <td>1.8</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>ASCE</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://ascelibrary.org/journal/jtepbs" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Transportation Safety & Security (JTSS)</td>
+              <td>Transportation / Safety</td>
+              <td>Q2</td>
+              <td>2.4</td>
+              <td>9%</td>
+              <td>8 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/gits20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of User Experience (JUX)</td>
+              <td>HCI / Method</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>User Experience Professionals Association</td>
+              <td>Full Open Access <p id=tag>Free</p>
+              </td>
+              <td>Y</td>
+              <td><a href="https://uxpajournal.org/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Visual Art Practice</td>
+              <td>Art / Communication / Culture / History / Method / Theory</td>
+              <td>Q1</td>
+              <td>0.8</td>
+              <td>17%</td>
+              <td>34 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/rjvp20/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Visual Culture</td>
+              <td>Communication / Culture / Aesthetics</td>
+              <td>Q1</td>
+              <td>0.4</td>
+              <td>4.5%</td>
+              <td>63 days</td>
+              <td>Sage</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://journals.sagepub.com/home/VCU" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Journal of Visual Literacy (JVL)</td>
+              <td>Communication / Education / Media / Art / HCI</td>
+              <td>Q1</td>
+              <td>1.3</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/rjvl20/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Leonardo</td>
+              <td>Visual Arts / Media / Music / HCI / AI</td>
+              <td>Q1</td>
+              <td>0.4</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>MIT Press Direct</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://direct.mit.edu/leon" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Media, Culture & Society</td> <!--* title -->
+              <td>Communication / Media / Culture / History</td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>3.3</td> <!--* impact factor -->
+              <td>8.1%</td> <!--* acceptance rate -->
+              <td>30 days</td> <!--* first dicision within days -->
+              <td>Sage</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://journals.sagepub.com/home/MCS" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Memory Studies</td> <!--* title -->
+              <td>Cognitive / Communication / Media / Culture / History</td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>1.2</td> <!--* impact factor -->
+              <td>36.6%</td> <!--* acceptance rate -->
+              <td>65 days</td> <!--* first dicision within days -->
+              <td>Sage</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://journals.sagepub.com/home/MSS" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Metaphor and Symbol</td> <!--* title -->
+              <td>Communication / Media / Culture / Visual Art</td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>3.3</td> <!--* impact factor -->
+              <td>15%</td> <!--* acceptance rate -->
+              <td>91 days</td> <!--* first dicision within days -->
+              <td>Taylor and Francis</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://www.tandfonline.com/journals/hmet20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Methodological Innovations</td>
+              <td>Multidisciplinary / Communication / HCI / Product / Industrial / Innovation / Method</td>
+              <td>Q2</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Sage</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://journals.sagepub.com/home/MIO" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>METU Journal of the Faculty of Architecture (METU JFA)</td>
+              <td>Multidisciplinary / Architecture / Planning / Urban Design / Cultural Heritage / Service / HCI</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Middle East Technical University</td>
+              <td>Full Open Access <p id=tag>Free</p>
+              </td>
+              <td>Y</td>
+              <td><a href="https://jfa.arch.metu.edu.tr/en" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Mobile Media & Communication</td> <!--* title -->
+              <td>HCI / Communication / Media / Culture / Gender / Education / History</td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>1.8</td> <!--* impact factor -->
+              <td>7.8%</td> <!--* acceptance rate -->
+              <td>26 days</td> <!--* first dicision within days -->
+              <td>Sage</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://journals.sagepub.com/home/MMC" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>New Media & Society</td> <!--* title -->
+              <td>Communication / Media / Culture / History</td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>4.3</td> <!--* impact factor -->
+              <td>13%</td> <!--* acceptance rate -->
+              <td>27 days</td> <!--* first dicision within days -->
+              <td>Sage</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://journals.sagepub.com/home/MCS" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>New Review of Hypermedia and Multimedia (NRHM)</td>
+              <!--* title -->
+              <td>HCI / Media / XR / AI</td> <!--* areas of scope -->
+              <td>Q2</td> <!--* best quartile -->
+              <td>0.8</td> <!--* impact factor -->
+              <td>15%</td> <!--* acceptance rate -->
+              <td>1 day</td> <!--* first dicision within days -->
+              <td>Taylor and Francis</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://www.tandfonline.com/journals/tham20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Pages on Arts and Design (PAD)</td>
+              <td>Multidisciplinary / Communication / Product / Method</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>AIAP – Italian Association of Visual Communication Designs</td>
+              <td>Full Open Access <p id=tag>Free</p>
+              </td>
+              <td>Y</td>
+              <td><a href="https://www.padjournal.net/new/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>PeerJ Computer Science</td>
+              <td>HCI / XR</td>
+              <td>Q1</td>
+              <td>3.8</td>
+              <td>28%</td>
+              <td>35 days</td>
+              <td>PeerJ</td>
+              <td>Full Open Access</td>
+              <td>Y</td>
+              <td><a href="https://peerj.com/computer-science/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Personal and Ubiquitous Computing</td> <!--* title -->
+              <td>HCI / XR / AI / Method</td> <!--* areas of scope -->
+              <td>Q2</td> <!--* best quartile -->
+              <td>3</td> <!--* impact factor -->
+              <td>NA</td> <!--* acceptance rate -->
+              <td>56 days</td> <!--* first dicision within days -->
+              <td>Springer</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://link.springer.com/journal/779" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>PRESENCE: Virtual and Augmented Reality</td>
+              <td>HCI / XR</td>
+              <td>Q3</td>
+              <td>0.7</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>MIT Press Direct</td>
+              <td>Full Open Access</td>
+              <td>Y</td>
+              <td><a href="https://direct.mit.edu/pvar" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Proceedings of the ACM on Computer Graphics and Interactive Techniques (PACMCGIT)</td> <!--* title -->
+              <td>HCI</td> <!--* areas of scope -->
+              <td>Q2</td> <!--* best quartile -->
+              <td>2.3</td> <!--* impact factor -->
+              <td>NA</td> <!--* acceptance rate -->
+              <td>NA</td> <!--* first dicision within days -->
+              <td>Association for Computing Machinery (ACM)</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://dl.acm.org/journal/pacmcgit" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Proceedings of the ACM on Interactive, Mobile, Wearable and Ubiquitous Technologies (IMWUT)</td>
+              <!--* title -->
+              <td>HCI</td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>4.5</td> <!--* impact factor -->
+              <td>NA</td> <!--* acceptance rate -->
+              <td>NA</td> <!--* first dicision within days -->
+              <td>Association for Computing Machinery (ACM)</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://dl.acm.org/journal/imwut" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Punctum – International Journal of Semiotics</td>
+              <td>Communication / Semiotics / Animation</td>
+              <td>Q4</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Hellenic Semiotic Society</td>
+              <td>Full Open Access</td>
+              <td>Y</td>
+              <td><a href="https://punctum.gr/" target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Research in Engineering Design</td> <!--* title -->
+              <td>Industrial / Product / Engineering / Architecture / Theory / Method</td>
+              <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>2.8</td> <!--* impact factor -->
+              <td>NA</td> <!--* acceptance rate -->
+              <td>5 days</td> <!--* first dicision within days -->
+              <td>Springer</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://link.springer.com/journal/163" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Research Journal of Textile and Apparel (RJTA)</td>
+              <td>Fashion / Textile / Industrial / Manufacturing</td>
+              <td>Q3</td>
+              <td>1.5</td>
+              <td>68%</td>
+              <td>47 days</td>
+              <td>Emerald</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.emeraldgrouppublishing.com/journal/rjta" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Sage Open</td>
+              <td>Communication / Culture / Aesthetics</td>
+              <td>Q1</td>
+              <td>2</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Sage</td>
+              <td>Full Open Access</td>
+              <td>Y</td>
+              <td><a href="https://journals.sagepub.com/home/SGO" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Semiotica</td> <!--* title -->
+              <td>Communication / Media / Semiotics</td> <!--* areas of scope -->
+              <td>Q1</td> <!--* best quartile -->
+              <td>1.2</td> <!--* impact factor -->
+              <td>NA</td> <!--* acceptance rate -->
+              <td>NA</td> <!--* first dicision within days -->
+              <td>De Gruyter Mouton</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://www.degruyterbrill.com/journal/key/semi/html" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Signs: Journal of Women in Culture and Society</td>
+              <td>Communication / Culture / Gender / Social</td>
+              <td>Q1</td>
+              <td>1.7</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>University of Chicago Press Books</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.journals.uchicago.edu/toc/signs/current" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>She Ji</td>
+              <td>Multidisciplinary / Theory / Communication / Sustainability / Culture / Industrial / Management /
+                Innovation /
+                Economics</td>
+              <td>Q1</td>
+              <td>1.8</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Elsevier + Tongji University</td>
+              <td>Full Open Access <p id=tag>Free</p>
+              </td> <!-- Free -->
+              <td>Y</td>
+              <td><a href="https://www.sciencedirect.com/journal/she-ji-the-journal-of-design-economics-and-innovation"
+                  target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td> <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Strategic Design Research Journal (SDRJ)</td>
+              <td>Strategic Design</td>
+              <td>Q2</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>180 days</td>
+              <td>University of Vale do Rio dos Sinos</td>
+              <td>Full Open Access <p id=tag>Free</p>
+              </td>
+              <td>Y</td>
+              <td><a href="https://revistas.unisinos.br/index.php/sdrj/index" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Technoetic Arts: A Journal of Speculative Research</td>
+              <td>Communication / Visual Arts / Speculative / Method</td>
+              <td>Q2</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Intellect</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td><a href="https://www.intellectbooks.com/technoetic-arts-a-journal-of-speculative-research"
+                  target="_blank">Link<i class="material-symbols-outlined"
+                    style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Technology | Architecture + Design (TAD)</td>
+              <td>Multidisciplinary / Architecture / HCI / XR / Industrial / Manufacturing / Sustainability / History /
+                Theory /
+                Method</td>
+              <td>Q1</td>
+              <td>0.5</td>
+              <td>11%</td>
+              <td>76 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/utad20/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Temes de Disseny</td>
+              <td>Multidisciplinary / Commununication / Product / HCI / Design Engineering / Service / Sustainability /
+                Health / Culture / History / Method</td>
+              <td>Q2</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>30 days</td>
+              <td>Elisava, Barcelona School of Design and Engineering (UVic-UCC)</td>
+              <td>Full Open Access <p id=tag>Free</p>
+              </td>
+              <td>Y</td>
+              <td><a href="https://raco.cat/index.php/Temes/index" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Textile: Cloth and Culture</td>
+              <td>Textile / Fashion / Culture / Communication / History</td>
+              <td>Q2</td>
+              <td>0.2</td>
+              <td>35%</td>
+              <td>52 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/rftx20/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Textile History</td>
+              <td>Textile / Fashion / Culture / History</td>
+              <td>Q1</td>
+              <td>0.5</td>
+              <td>31%</td>
+              <td>94 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/ytex20/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>The Design Journal</td>
+              <td>Multidisciplinary / Culture / Communication / HCI / Sustainability / Product / Industrial / Theory /
+                Education
+              </td>
+              <td>Q2</td>
+              <td>0.8</td>
+              <td>20%</td>
+              <td>13 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/toc/rfdj20/current" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>The International Journal of Design Education</td>
+              <td>Multidisciplinary / Education / Communication / Industrial / Ethics / Method / Theory</td>
+              <td>Q1</td>
+              <td>NA</td>
+              <td>46%</td>
+              <td>90 days</td>
+              <td>CG Scholar</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://cgscholar.com/bookstore/cgrn/200/203" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>The International Journal of Design in Society</td>
+              <td>Multidisciplinary / Communication / Culture / Design Policy / Ethics / Social / Sustainability</td>
+              <td>Q2</td>
+              <td>NA</td>
+              <td>45%</td>
+              <td>90 days</td>
+              <td>CG Scholar</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://cgscholar.com/bookstore/cgrn/200/204" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>The International Journal of Design Management and Professional Practice</td>
+              <td>Multidisciplinary / Communication / Culture / Design Policy / Regulations / Ethics / Social /
+                Sustainability
+              </td>
+              <td>Q2</td>
+              <td>NA</td>
+              <td>48%</td>
+              <td>90 days</td>
+              <td>CG Scholar</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://cgscholar.com/bookstore/cgrn/200/205" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>The International Journal of Visual Design</td>
+              <td>Multidisciplinary / Communication / Culture / Animation / Typography / Graphics / Photography</td>
+              <td>Q2</td>
+              <td>NA</td>
+              <td>33%</td>
+              <td>90 days</td>
+              <td>CG Scholar</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://cgscholar.com/bookstore/cgrn/200/207" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>The Journal of Modern Craft</td>
+              <td>Multidisciplinary / Communication / Culture / Architecture / Furniture / Product / Art</td>
+              <td>Q4</td>
+              <td>0.2</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/rfmc20/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>The Visual Computer</td>
+              <td>HCI / XR / Computer Graphics / Animation / Visualization</td>
+              <td>Q2</td>
+              <td>3</td>
+              <td>NA</td>
+              <td>2 days</td>
+              <td>Springer</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://link.springer.com/journal/371/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Theoretical Issues in Ergonomics Science (TIES)</td> <!--* title -->
+              <td>Ergonomics / Industrial / Product / Engineering / Safety / Method / Theory</td>
+              <!--* areas of scope -->
+              <td>Q2</td> <!--* best quartile -->
+              <td>2</td> <!--* impact factor -->
+              <td>24%</td> <!--* acceptance rate -->
+              <td>15 days</td> <!--* first dicision within days -->
+              <td>Taylor and Francis</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://www.tandfonline.com/journals/ttie20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Transportation Planning and Technology</td>
+              <td>Transportation / Policy / Technology / Economics</td>
+              <td>Q2</td>
+              <td>1.3</td>
+              <td>21%</td>
+              <td>9 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/gtpt20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Universal Access in the Information Society</td>
+              <td>Multidisciplinary / HCI / XR / Accessibility / Computer Graphics / Architectures / Method / Policy
+              </td>
+              <td>Q2</td>
+              <td>2.1</td>
+              <td>NA</td>
+              <td>9 days</td>
+              <td>Springer</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://link.springer.com/journal/10209/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Vehicle System Dynamics</td>
+              <td>Transportation / Policy / Technology / Economics</td>
+              <td>Q1</td>
+              <td>3.5</td>
+              <td>22%</td>
+              <td>14 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/nvsd20" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Virtual Creativity (VCR)</td>
+              <td>HCI / XR / Communication / Creativity / Cultural Heritage / Contemporay Media / Animation / Art
+                /
+                Gender / Theory</td>
+              <td>Q3</td>
+              <td>0.12</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Intellect</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td><a href="https://www.intellectbooks.com/virtual-creativity" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Visible Language</td>
+              <td>Communication / HCI</td>
+              <td>Q4</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>30 days</td>
+              <td>Visible Language Consortium</td>
+              <td>Full Open Access <p id=tag>Free</p>
+              </td> <!-- Free -->
+              <td>Y</td>
+              <td><a href="https://www.visible-language.org/journal/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Visual Anthropology</td>
+              <td>Communication / Semiotics / Craft / Media / Method / Theory</td>
+              <td>Q2</td>
+              <td>0.4</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/gvan20/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Visual Communication</td>
+              <td>Communication / Semiotics / Media / Visual Design / Theory / History / Culture</td>
+              <td>Q1</td>
+              <td>1.4</td>
+              <td>14.1%</td>
+              <td>47 days</td>
+              <td>Sage</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://journals.sagepub.com/home/VCJ" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Visual Communication Quarterly (VCQ)</td>
+              <td>Communication / Culture / Graphics / Media / Creative Arts / Theory / Ethics</td>
+              <td>Q2</td>
+              <td>0.4</td>
+              <td>40%</td>
+              <td>42 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/hvcq20/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Visual Ethnography</td>
+              <td>Communication / Culture / Semiotics / Media / Theory / History</td>
+              <td>Q4</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>University of Basilicata, Italy</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.vejournal.org/index.php/vejournal" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Virtual Reality</td>
+              <td>HCI / XR</td>
+              <td>Q1</td>
+              <td>4.4</td>
+              <td>NA</td>
+              <td>8 days</td>
+              <td>Springer</td>
+              <td>Full Open Access</td>
+              <td>Y</td>
+              <td><a href="https://link.springer.com/journal/10055" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Visual Resources</td>
+              <td>Multidisciplinary / HCI / Communication / Culture / Media / Theory / History / Art / Architecture</td>
+              <td>Q2</td>
+              <td>0.3</td>
+              <td>41%</td>
+              <td>NA</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/gvir20/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Visual Review</td>
+              <td>Communication / Culture / Media / Advertising / Art</td>
+              <td>Q1</td>
+              <td>NA</td>
+              <td>NA</td>
+              <td>40 days</td>
+              <td>VisualCOM</td>
+              <td>Full Open Access</td>
+              <td>Y</td>
+              <td><a href="https://visualcompublications.es/revVISUAL/index" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>Visual Studies</td>
+              <td>Communication / Culture / Media / Advertising / Art / Education</td>
+              <td>Q1</td>
+              <td>0.7</td>
+              <td>18%</td>
+              <td>15 days</td>
+              <td>Taylor and Francis</td>
+              <td>Hybrid</td>
+              <td>Y</td>
+              <td><a href="https://www.tandfonline.com/journals/rvst20/" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+            <tr>
+              <td>WORK: A Journal of Prevention, Assessment & Rehabilitation</td> <!--* title -->
+              <td>Multidisciplinary / Industrial Design / Ergonomics</td> <!--* areas of scope -->
+              <td>Q2</td> <!--* best quartile -->
+              <td>1.5</td> <!--* impact factor -->
+              <td>NA</td> <!--* acceptance rate -->
+              <td>NA</td> <!--* first dicision within days -->
+              <td>IOS Press + Sage</td> <!--* publisher -->
+              <td>Hybrid</td> <!--* publishing model -->
+              <td>Y</td> <!--* open access available -->
+              <td><a href="https://journals.sagepub.com/home/WOR" target="_blank">Link<i
+                    class="material-symbols-outlined" style="font-size: 16px;">arrow_outward</i></a></td>
+              <!--* link -->
+            </tr>
+
+
+
+
+          </tbody>
+        </table>
+
+
+      </div>
+
+
+
+      <div id="info" class="row col-xl-12 col-lg-12 col-md-12 col-sm-12">
+
+        <div class="col-xl-5 col-lg-5 col-md-12 col-sm-12"
+          style="margin: 0px; padding-left: 0px; padding-right: 50px; padding-bottom: 8px;">
+          <p>
+            Quartile rankings are based on&nbsp;<a href="https://www.scimagojr.com/" target="_blank">Scimago
+              database</a>. As journal metrics are subject to change, please refer to the journal's official website for
+            the most up-to-date information.
+          </p>
+        </div>
+
+        <div id="infoColumn" class="col-xl-4 col-lg-4 col-md-12 col-sm-12">
+
+          <i class="material-symbols-outlined">
+            maps_ugc
+          </i>
+
+          <p class="link">
+            <span>
+              <a href="https://forms.gle/P4iNz8R5XZMhR57Q9" target="_blank">
+                Share a missing journal
+                <i class="material-symbols-outlined" style="font-size:16px; padding-top:0px; padding-left:4px;">
+                  arrow_outward
+                </i>
+              </a>
+            </span>
+          </p>
+        </div>
+
+        <div id="infoColumn" class="col-xl-3 col-lg-3 col-md-12 col-sm-12">
+
+          <i class="material-symbols-outlined">
+            report
+          </i>
+          <p class="link">
+            <span>
+              <a href="https://forms.gle/8cdddmX1bwAHHbMg6" target="_blank">
+                Report an error
+                <i class="material-symbols-outlined" style="font-size:16px; padding-top:0px; padding-left:4px;">
+                  arrow_outward
+                </i>
+              </a>
+            </span>
+          </p>
+        </div>
+
+      </div>
+
+      <div class="spacer_b60"></div>
+
+      <div id="info" class="row col-xl-12 col-lg-12 col-md-12 col-sm-12" style="padding-left:0px; padding-right:0px;">
+        <div class="row col-xl-12 col-lg-12 col-md-12 col-sm-12" style="padding-left: 0px; margin-left: 0px;">
+          <p class="label">
+            Curated by:
+          <p>
+            <a href="https://www.linkedin.com/in/aarishabh/" target="_blank">Rishabh</a>,&nbsp;<a
+              href="https://www.linkedin.com/in/madebyswati/" target="_blank">Swati</a>, and&nbsp;<a
+              href="https://www.linkedin.com/in/akanksha-bhardwaj-523803138/" target="_blank">Akanksha</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="spacer_b80"></div>
+
+
+    <!--- bottom nav card start -------------------->
+    <a href="/conflist.html" id="card-link-wrapper">
+
+      <div class="container-fluid" id="bottomNavCard">
+        <div class="container">
+
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" id="header">
+              <p class="label">More</p>
+              <div class="spacer_b40"></div>
+
+              <h1>Design Conferences Database</h1>
+              <div class="spacer_b20"></div>
+
+              <div class="col-xl-6 col-lg-8 col-md-10 col-sm-12">
+                <p>
+                  A comprehensive collection of global academic design conferences to help you publish your work, stay
+                  connected, and informed about the latest developments and opportunities in your field.
+                </p>
+              </div>
+
+              <span class="material-bg-icon material-symbols-outlined">groups_2</span>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+    <!--- bottom nav card end -------------------->
+
+
+
+
+    <!--- footer start -------------------->
+    <div class="containerfluid" id="footer">
+      <div class="container">
+        <div class="spacer_b80"></div>
+
+        <div class="row" style="background-color: none; padding-left:0px; padding-right:0px;">
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12" float="right" style="padding:0px">
+            <!--<div class="divider_b20"></div>-->
+          </div>
+
+          <div class="col-lg-6" style="padding-left:0px; padding-right:0px; float:left; align:left">
+
+            <p class="label">©2010—2025 Rishabh Pandey
+              <br><br>
+            </p>
+
+            <p>
+              Multidisciplinary designer <br>fluent in pixels and print.
+            </p>
+
+            <div class="spacer_b60"></div>
+
+          </div>
+
+
+          <div class="col-xl-2 col-lg-4 col-md-7 col-sm-12" style="padding-left:0px;">
+            <p class="label">Links</p>
+            <br>
+
+            <p>
+              <a class="footerText" href="https://rishabhpandey.com/work/" target="_blank">
+                Work
+                <!--span class="material-symbols-outlined">arrow_outward</span-->
+              </a>
+              <br>
+              <a class="footerText" href="https://rishabhpandey.com/about/" target="_blank">
+                About
+                <!--span class="material-symbols-outlined">arrow_outward</span-->
+              </a>
+              <br>
+              <a class="footerText" href="https://rishabhpandey.com/resources/" target="_blank">
+                Resources
+                <!--span class="material-symbols-outlined">arrow_outward</span-->
+              </a>
+              <br>
+              <a class="footerText" href="https://rishabhpandey.com/contact/" target="_blank">
+                Contact
+                <!--span class="material-symbols-outlined">arrow_outward</span-->
+              </a>
+            </p>
+          </div>
+
+
+          <div class="col-xl-3 col-lg-4 col-md-5 col-sm-12" style="padding-left:0px;">
+            <p class="label"></p>
+            <br><br>
+
+            <p>
+              <a class="footerText" href="mailto:hi@rishabhpandey.com" target="_blank">
+                hi@rishabhpandey.com
+                <i class="material-symbols-outlined">arrow_outward</i>
+              </a>
+              <br>
+
+              <a class="footerText" href="https://www.linkedin.com/in/aarishabh/" target="_blank">
+                LinkedIn
+                <i class="material-symbols-outlined">arrow_outward</i>
+              </a>
+              <br>
+
+              <a class="footerText" href="https://www.instagram.com/aarishabh/" target="_blank">
+                Instagram
+                <i class="material-symbols-outlined">arrow_outward</i>
+              </a>
+              <br>
+              <br>
+            </p>
+
+            <div class="d-none d-sm-block spacer_b80"></div>
+            <div class="spacer_b60"></div>
+          </div>
+
+          <div class=".d-none d-sm-block d-md-none spacer_b0"></div>
+          <div class="spacer_b20"></div>
+        </div>
+
+
+        <div class="col-lg-12" style="padding-left: 0px; margin-left: 0px;">
+          <!--a href="https://rishabhpandey.com/">
+        <!--img src="assets/Footer-name-for-website-2024.svg" alt="Rishabh Pandey footer logo" class="image"-->
+          <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" version="1.1"
+            viewBox="0 0 1869.83 240.82">
+            <defs>
+              <style>
+                .cls-1 {
+                  fill: rgb(255, 255, 255, 0.2);
+                  stroke-width: 0px;
+                }
+              </style>
+            </defs>
+            <path class="cls-1"
+              d="M129.7,150.28c-2.67-8.26-7.59-14.75-14.76-19.49-5.09-3.36-12.01-5.71-20.77-7.05v-2.06c14.45-.36,25.32-4.55,32.61-12.57,7.29-8.02,10.93-19.73,10.93-35.16v-6.74c0-20.4-5.59-36.04-16.76-46.91-11.17-10.87-28.9-16.3-53.19-16.3H0v232.8h56.29v-76.69h6.19c4.01,0,7.29.79,9.84,2.37,2.55,1.58,4.46,3.92,5.74,7.01,1.28,3.1,1.97,7.01,2.1,11.75l2.37,55.56h56.83l-4.37-56.83c-.85-11.54-2.61-21.43-5.28-29.69ZM80.7,89.08c0,8.87-1.28,15.12-3.83,18.76s-6.86,5.46-12.93,5.46h-8.02v-60.66h8.02c6.44,0,10.84,1.82,13.21,5.46s3.55,9.96,3.55,18.94v12.02ZM146.86,4.01h58.29v232.8h-58.29V4.01ZM327.69,142.36c2.49,7.35,3.73,16.3,3.73,26.87v4.55c0,21.5-5.59,38.04-16.76,49.64-11.17,11.6-28.05,17.4-50.64,17.4-6.92,0-13.3-.55-19.13-1.64-5.83-1.09-11.08-2.52-15.76-4.28-4.68-1.76-8.77-3.67-12.3-5.74l-3.46-51.55c4.74,2.55,10.26,5.01,16.58,7.38,6.31,2.37,13.3,3.55,20.95,3.55s13.05-1.52,16.58-4.55c3.52-3.03,5.28-7.35,5.28-12.93v-3.1c0-4.37-.85-8.11-2.55-11.2-1.7-3.1-4.19-6.19-7.47-9.29-3.28-3.1-7.35-6.77-12.2-11.02-7.77-6.92-14.54-13.75-20.31-20.49-5.77-6.74-10.23-14.09-13.39-22.04-3.16-7.95-4.74-17.09-4.74-27.42v-4.19c0-19.55,5.43-34.82,16.3-45.81C239.28,5.5,254.74,0,274.77,0c10.08,0,18.94,1.34,26.6,4.01,7.65,2.67,13.96,5.77,18.94,9.29l3.28,49.37c-4.13-2.79-8.96-5.34-14.48-7.65-5.53-2.31-11.87-3.46-19.04-3.46-4.25,0-7.83.58-10.75,1.73-2.91,1.16-5.07,2.89-6.47,5.19-1.4,2.31-2.1,5.16-2.1,8.56v.91c0,3.89.91,7.47,2.73,10.75,1.82,3.28,4.67,6.77,8.56,10.47,3.89,3.71,8.8,8.17,14.75,13.39,7.89,6.8,14.39,13.3,19.49,19.49,5.1,6.19,8.89,12.96,11.39,20.31ZM424.44,4.01h58.29v232.8h-58.29v-93.08h-27.51v93.08h-58.29V4.01h58.29v89.44h27.51V4.01ZM519.24,4.01l-30.6,232.8h56.47l4.56-51.55h28.59l4.56,51.55h56.47l-30.6-232.8h-89.44ZM553.51,141.72l8.53-96.55h3.83l8.53,96.55h-20.9ZM740.27,110.57v-1.64c14.81-1.21,25.38-5.56,31.7-13.02,6.31-7.47,9.47-17.88,9.47-31.24v-5.1c0-17.97-5.65-31.73-16.94-41.26-11.29-9.53-29.27-14.3-53.92-14.3h-65.4v232.8h69.77c24.17,0,41.65-5.28,52.46-15.85,10.81-10.57,16.21-27.08,16.21-49.55v-7.47c0-15.3-2.98-27.42-8.93-36.34-5.95-8.93-17.43-14.6-34.43-17.03ZM699.83,51.19h9.11c6.19,0,10.63,1.67,13.3,5.01,2.67,3.34,4.01,8.72,4.01,16.12v4.01c0,7.41-1.34,12.78-4.01,16.12-2.67,3.34-7.1,5.01-13.3,5.01h-9.11v-46.27ZM727.7,168.5c0,7.17-1.34,12.42-4.01,15.76-2.67,3.34-7.41,5.01-14.21,5.01h-9.65v-48.82h9.65c6.8,0,11.54,1.67,14.21,5.01,2.67,3.34,4.01,8.59,4.01,15.76v7.29ZM876.75,4.01h58.29v232.8h-58.29v-93.08h-27.51v93.08h-58.29V4.01h58.29v89.44h27.51V4.01ZM1136.15,76.33c0-23.8-5.59-41.81-16.76-54.01-11.17-12.21-29.39-18.31-54.65-18.31h-65.94v232.8h56.29v-62.12h10.38c24.89,0,42.9-5.83,54.01-17.49,11.11-11.66,16.67-29.87,16.67-54.65v-26.23ZM1079.5,101.83c0,8.87-1.16,15.12-3.46,18.76-2.31,3.64-6.74,5.46-13.3,5.46h-8.01V52.65h8.01c6.56,0,10.99,1.82,13.3,5.46,2.31,3.64,3.46,9.96,3.46,18.94v24.77ZM1161.4,4.01l-30.6,232.8h56.47l4.56-51.55h28.59l4.56,51.55h56.47l-30.6-232.8h-89.44ZM1195.67,141.72l8.54-96.55h3.83l8.54,96.55h-20.9ZM1389.17,3.64h51.73v233.17h-75.42l-28.05-168.68h-1.82l3.83,116.77v51.92h-52.1V3.64h76.14l27.69,165.95h1.82l-3.83-114.03V3.64ZM1522.59,4.01h-68.31v232.8h68.31c25.75,0,44.33-6.22,55.74-18.67,11.41-12.45,17.12-30.57,17.12-54.38v-86.71c0-23.68-5.8-41.77-17.4-54.28-11.6-12.51-30.09-18.76-55.47-18.76ZM1538.62,163.58c0,8.38-1.49,14.39-4.46,18.03-2.98,3.64-7.86,5.46-14.66,5.46h-8.74V53.37h8.74c6.8,0,11.69,1.82,14.66,5.46,2.97,3.64,4.46,9.65,4.46,18.03v86.71ZM1662.27,4.01h53.92v50.28h-53.92v39.89h51.92v49h-51.92v42.63h53.92v51.01h-110.21V4.01h56.29ZM1869.83,4.01l-47.36,172v60.8h-55.74v-60.76l-47.91-172.05h57.75l10.57,63.39,6.01,41.53h2.92l6.01-41.53,10.02-63.39h57.75Z" />
+          </svg>
+          </a>
+        </div>
+        <div class="spacer_b40"></div>
+      </div>
+      <!--- footer end -------------------->
+    </div>
+
+
+    <!-- Custom js link -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+      integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
+      integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/script_theme.js" defer></script>
+    <script src="js/script_journal.js" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+# Disable directory listing
+Options -Indexes
+
+# Use UTF-8 encoding for all files
+AddDefaultCharset UTF-8
+
+# Allow sitemap and robots.txt to be accessed by crawlers
+<FilesMatch "^(sitemap\.xml|robots\.txt)$">
+  Require all granted
+</FilesMatch>
+
+# Allow indexing and crawling by search engines
+<IfModule mod_headers.c>
+  Header set X-Robots-Tag "index, follow"
+</IfModule>
